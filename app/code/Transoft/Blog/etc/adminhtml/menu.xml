@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Transoft_Blog::blog" title="Blog title" module="Transoft_Blog" sortOrder="51" resource="Transoft_Blog::blog"/>
+        <add id="Transoft_Blog::post" title="Manage Posts" module="Transoft_Blog" sortOrder="10" action="transoft_blog/post" resource="Transoft_Blog::post" parent="Transoft_Blog::blog"/>
+        <add id="Transoft_Blog::blog_configuration" title="Configuration Blog" module="Transoft_Blog" sortOrder="99" parent="Transoft_Blog::blog" action="adminhtml/system_config/edit/section/catalog" resource="Magento_Catalog::config_catalog"/>
+    </menu>
+</config>

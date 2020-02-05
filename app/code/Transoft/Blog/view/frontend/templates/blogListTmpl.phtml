@@ -1,0 +1,24 @@
+<?php
+use Transoft\Blog\ViewModel\Bloglist;
+
+/** @var \Transoft\Blog\Block\Bloglist $block*/
+/** @var Bloglist $bloglistViewModel */
+
+$bloglistViewModel = $block->getData('bloglist_view_model');
+$data = $bloglistViewModel->retrieveModel()->getData();
+$match = $bloglistViewModel->isTypesMatching();
+
+?>
+<?php if ($match): ?>
+    <div>
+        <h3>Latest 5 blogs:</h3>
+        <ul>
+            <?php foreach ($data as $value):
+                $item = $value['theme'];
+                $url = $block->escapeUrl($bloglistViewModel->getUrlById($value['blog_id']));
+                ?>
+                <?= $block->escapeHtml("<li><a href='$url'>$item</a></li>", ['a','li']) ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

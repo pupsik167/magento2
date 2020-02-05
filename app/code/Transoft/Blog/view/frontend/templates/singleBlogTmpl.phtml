@@ -1,0 +1,24 @@
+<?php
+use Transoft\Blog\ViewModel\Singleblog;
+
+/** @var \Transoft\Blog\Block\Singleblog $block*/
+/** @var Singleblog $singleBlogViewModel */
+
+$singleBlogViewModel = $block->getData('singleblog_view_model');
+$id = $block->getRequest()->getParam('id');
+$data = $singleBlogViewModel->getBlogById($id);
+
+?>
+
+<div>
+    <h3><?= $block->escapeHtml($data['theme']) ?></h3>
+    <div>
+        <span><strong>Content:</strong></span>
+        <p><?= $block->escapeHtml($data['content']) ?></p>
+        <span><strong>Image:</strong></span>
+        <?php $image_url = $data['image_url']; ?>
+        <?= $block->escapeHtml("<img src='$image_url' />", ['img']) ?>
+        <span><strong>Created at:</strong></span>
+        <p><?= $block->escapeHtml($data['creation_time']) ?></p>
+    </div>
+</div>

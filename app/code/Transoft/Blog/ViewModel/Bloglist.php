@@ -3,9 +3,10 @@ declare(strict_types=1);
 namespace Transoft\Blog\ViewModel;
 
 use Magento\Catalog\Block\Product\View;
-use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\App\ObjectManager;
-use Transoft\Blog\Helper\Data;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Transoft\Blog\Model\ResourceModel\Post\Collection;
 use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
@@ -19,25 +20,33 @@ class Bloglist implements ArgumentInterface
     /**
      * @var PostCollectionFactory
      */
-    protected $modelFactory;
+    protected $postCollectionFactory;
 
     /**
-     * Transoft\Blog\Helper\Data $helper
+     * ScopeConfigInterface $scopeInterface
      */
-    protected $helper;
+    private $scopeInterface;
+
+    /**
+     * UrlInterface $urlInterface
+     */
+    private $urlInterface;
 
     /**
      * Constructor.
      *
-     * @param PostCollectionFactory $modelFactory
-     * @param Data $helper
+     * @param PostCollectionFactory $postCollectionFactory
+     * @param UrlInterface $urlInterface
+     * @param ScopeConfigInterface $scopeInterface
      */
     public function __construct(
-        PostCollectionFactory $modelFactory,
-        Data $helper
+        PostCollectionFactory $postCollectionFactory,
+        UrlInterface $urlInterface,
+        ScopeConfigInterface $scopeInterface
     ) {
-        $this->modelFactory = $modelFactory;
-        $this->helper = $helper;
+        $this->postCollectionFactory = $postCollectionFactory;
+        $this->urlInterface = $urlInterface;
+        $this->scopeInterface = $scopeInterface;
     }
 
     /**
@@ -45,10 +54,10 @@ class Bloglist implements ArgumentInterface
      *
      * @return Collection
      */
-    public function retrieveModel()
+    public function getPostCollection()
     {
-        $collection = $this->modelFactory->create();
-        $collection->setOrder('creation_time', 'ASC')->setPageSize(5);
+        $collection = $this->postCollectionFactory->create();
+        $collection->setOrder('creation_time', 'DESC')->setPageSize(5);
 
         return $collection;
     }
@@ -58,9 +67,9 @@ class Bloglist implements ArgumentInterface
      *
      * @return bool
      */
-    public function isTypesMatching()
+    public function isTypesMatching() : bool
     {
-        $types = $this->helper->getConfig('catalog/blog/blog_applied_to');
+        $types = $this->scopeInterface->getValue('catalog/blog/blog_applied_to');
         $product = ObjectManager::getInstance()->get(View::class);
         $current_product_type = $product->getProduct()->getTypeId();
         $types_array = explode(',', $types);
@@ -74,8 +83,23 @@ class Bloglist implements ArgumentInterface
      *
      * @return string
      */
-    public function getUrlById($id)
+    public function getUrlById(int $id) : string
     {
-        return "blog/blog/index?id=$id";
+        return $this->urlInterface->getUrl("blog/blog/index?id=$id");
+    }
+
+    /**
+     * Returns blog by id
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function getBlogById($id)
+    {
+        $item = $this->postCollectionFactory->create()
+            ->addFieldToFilter('blog_id', ['eq' => $id])->getFirstItem();
+
+        return $item->getData();
     }
 }

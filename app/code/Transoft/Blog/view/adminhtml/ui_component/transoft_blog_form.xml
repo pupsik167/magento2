@@ -30,7 +30,7 @@
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="submit_url" xsi:type="url" path="transoft_blog/post/save" />
+                    <item name="submit_url" xsi:type="url" path="blog/post/save" />
                 </item>
             </argument>
         </argument>
@@ -101,21 +101,33 @@
                 <dataScope>creation_time</dataScope>
             </settings>
         </field>
-        <field name="image_url">
+        <field name="image_url" sortOrder="40" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="dataType" xsi:type="string">string</item>
-                    <item name="label" xsi:type="string" translate="true">Image</item>
-                    <item name="visible" xsi:type="boolean">true</item>
-                    <item name="formElement" xsi:type="string">imageUploader</item>
-                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/image</item>
-                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
-                    <item name="required" xsi:type="boolean">false</item>
-                    <item name="uploaderConfig" xsi:type="array">
-                        <item name="url" xsi:type="url" path="transoft_blog/index/upload"/>
-                    </item>
+                    <item name="source" xsi:type="string">post</item>
                 </item>
             </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Post Image</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <required>false</required>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="blog/index/upload"/>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
+                        <openDialogTitle>Media Gallery</openDialogTitle>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>4194304</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
         </field>
     </fieldset>
 </form>

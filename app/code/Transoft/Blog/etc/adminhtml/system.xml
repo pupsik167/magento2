@@ -8,6 +8,7 @@
         <resource>Magento_Catalog::config_catalog</resource>
         <group id="blog" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Blog Configuration</label>
+            <!-- Blog applied to product type -->
             <field id="blog_applied_to" translate="label" type="multiselect" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Blog applied to</label>
                 <source_model>Magento\Catalog\Model\Product\Type</source_model>

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Transoft\Blog\Setup\Patch\Data;
 
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Transoft\Blog\Model\ResourceModel\Post as BlogResourceModel;
@@ -16,14 +17,21 @@ class BlogRecords implements DataPatchInterface
     /** @var ModuleDataSetupInterface */
     protected $moduleDataSetup;
 
+    /** @var AdapterInterface */
+    protected $adapterInterface;
+
     /**
      * Constructor.
      *
      * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param AdapterInterface $adapterInterface
      */
-    public function __construct(ModuleDataSetupInterface $moduleDataSetup)
-    {
+    public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
+        AdapterInterface $adapterInterface
+    ) {
         $this->moduleDataSetup = $moduleDataSetup;
+        $this->adapterInterface = $adapterInterface;
     }
 
     /**
@@ -68,47 +76,49 @@ class BlogRecords implements DataPatchInterface
         $setup->startSetup();
 
         $table = $setup->getTable(BlogResourceModel::MAIN_TABLE);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 1,
-            'theme' => 'First blog ever',
-            'content' => 'This is first blog content',
-            'image_url' => 'img/image1.img',
-            'creation_time' => '2020-01-27 10:25:25'
-        ]);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 2,
-            'theme' => 'Second blog',
-            'content' => 'This is second blog content',
-            'image_url' => 'img/image2.img',
-            'creation_time' => '2020-01-28 10:25:25'
-        ]);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 3,
-            'theme' => 'Third blog',
-            'content' => 'This is third blog content',
-            'image_url' => 'img/image3.img',
-            'creation_time' => '2020-01-28 10:26:26'
-        ]);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 4,
-            'theme' => 'Fourth blog ever',
-            'content' => 'This is fourth blog content',
-            'image_url' => 'img/image4.img',
-            'creation_time' => '2020-01-27 10:29:29'
-        ]);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 5,
-            'theme' => 'Fifth blog ever',
-            'content' => 'This is fifth blog content',
-            'image_url' => 'img/image5.img',
-            'creation_time' => '2020-01-27 10:35:35'
-        ]);
-        $setup->getConnection()->insert($table, [
-            'blog_id'=> 6,
-            'theme' => 'Sixth blog ever',
-            'content' => 'This is sixth blog content',
-            'image_url' => 'img/image6.img',
-            'creation_time' => '2020-01-27 10:45:45'
+        $this->adapterInterface->insertMultiple($table, [
+            [
+                'blog_id'=> 1,
+                'theme' => 'First blog ever',
+                'content' => 'This is first blog content',
+                'image_url' => 'img/image1.img',
+                'creation_time' => '2020-01-27 10:25:25'
+            ],
+            [
+                'blog_id'=> 2,
+                'theme' => 'Second blog',
+                'content' => 'This is second blog content',
+                'image_url' => 'img/image2.img',
+                'creation_time' => '2020-01-28 10:25:25'
+            ],
+            [
+                'blog_id'=> 3,
+                'theme' => 'Third blog',
+                'content' => 'This is third blog content',
+                'image_url' => 'img/image3.img',
+                'creation_time' => '2020-01-28 10:26:26'
+            ],
+            [
+                'blog_id'=> 4,
+                'theme' => 'Fourth blog ever',
+                'content' => 'This is fourth blog content',
+                'image_url' => 'img/image4.img',
+                'creation_time' => '2020-01-27 10:29:29'
+            ],
+            [
+                'blog_id'=> 5,
+                'theme' => 'Fifth blog ever',
+                'content' => 'This is fifth blog content',
+                'image_url' => 'img/image5.img',
+                'creation_time' => '2020-01-27 10:35:35'
+            ],
+            [
+                'blog_id'=> 6,
+                'theme' => 'Sixth blog ever',
+                'content' => 'This is sixth blog content',
+                'image_url' => 'img/image6.img',
+                'creation_time' => '2020-01-27 10:45:45'
+            ]
         ]);
 
         $setup->endSetup();

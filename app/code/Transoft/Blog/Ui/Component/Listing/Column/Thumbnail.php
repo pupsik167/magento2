@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace Transoft\Blog\Ui\Component\Listing\Column;
 
-use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -15,11 +14,8 @@ use Magento\Ui\Component\Listing\Columns\Column;
  */
 class Thumbnail extends Column
 {
-    const NAME = 'thumbnail';
-
     const ALT_FIELD = 'name';
 
-    private $_objectManager = null;
     /**
      * @var UrlInterface
      */
@@ -29,7 +25,6 @@ class Thumbnail extends Column
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
      * @param UrlInterface $urlBuilder
-     * @param ObjectManagerInterface $objectManager
      * @param array $components
      * @param array $data
      */
@@ -37,13 +32,11 @@ class Thumbnail extends Column
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         UrlInterface $urlBuilder,
-        ObjectManagerInterface $objectManager,
         array $components = [],
         array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         $this->urlBuilder = $urlBuilder;
-        $this->_objectManager = $objectManager;
     }
 
     /**
@@ -74,9 +67,9 @@ class Thumbnail extends Column
      *
      * @return null|string
      */
-    protected function getAlt($row)
+    protected function getAlt(array $row)
     {
         $altField = $this->getData('config/altField') ?: self::ALT_FIELD;
-        return isset($row[$altField]) ? $row[$altField] : null;
+        return $row[$altField] ?? null;
     }
 }

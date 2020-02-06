@@ -21,7 +21,7 @@ class Upload extends Action implements HttpGetActionInterface
      *
      * @var ImageUploader
      */
-    protected $imageUploader;
+    private $imageUploader;
 
     /**
      * Upload constructor.
@@ -44,20 +44,13 @@ class Upload extends Action implements HttpGetActionInterface
      */
     public function execute()
     {
-        $imageUploadId = $this->_request->getParam('param_name', 'review_image');
-        try {
-            $imageResult = $this->imageUploader->saveFileToTmpDir($imageUploadId);
+        $imageId = $this->_request->getParam('param_name', 'image');
 
-            $imageResult['cookie'] = [
-                'name' => $this->_getSession()->getName(),
-                'value' => $this->_getSession()->getSessionId(),
-                'lifetime' => $this->_getSession()->getCookieLifetime(),
-                'path' => $this->_getSession()->getCookiePath(),
-                'domain' => $this->_getSession()->getCookieDomain(),
-            ];
+        try {
+            $result = $this->imageUploader->saveFileToTmpDir($imageId);
         } catch (\Exception $e) {
-            $imageResult = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
+            $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($imageResult);
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 }

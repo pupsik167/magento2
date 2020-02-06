@@ -11,6 +11,5 @@ use Magento\Framework\View\Element\Template;
  */
 class Bloglist extends Template
 {
-    /** @var  */
-    protected $modelFactory;
+
 }

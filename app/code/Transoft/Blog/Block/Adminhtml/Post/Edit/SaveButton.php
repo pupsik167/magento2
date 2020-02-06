@@ -26,7 +26,6 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
                 'mage-init' => ['button' => ['event' => 'save']],
                 'form-role' => 'save',
             ],
-            //'on_click' => sprintf("location.href= '%s';", $this->getSaveUrl()),
             'sort_order' => 90
         ];
     }

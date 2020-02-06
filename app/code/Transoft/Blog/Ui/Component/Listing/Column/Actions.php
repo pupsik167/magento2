@@ -12,7 +12,7 @@ use Magento\Ui\Component\Listing\Columns\Column;
  *
  * UI component contacts actions class
  */
-class ContactsActions extends Column
+class Actions extends Column
 {
     /**
      * @var UrlInterface
@@ -51,13 +51,8 @@ class ContactsActions extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$item) {
                 $item[$this->getData('name')]['edit'] = [
-                    'href' => $this->urlBuilder->getUrl('transoft_blog/post/edit', ['id' => $item['blog_id']]),
+                    'href' => $this->urlBuilder->getUrl('blog/post/edit', ['id' => $item['blog_id']]),
                     'label' => __('Edit'),
-                    'hidden' => false
-                ];
-                $item[$this->getData('name')]['delete'] = [
-                    'href' => $this->urlBuilder->getUrl('transoft_blog/post/delete', ['id' => $item['blog_id']]),
-                    'label' => __('Delete'),
                     'hidden' => false
                 ];
             }

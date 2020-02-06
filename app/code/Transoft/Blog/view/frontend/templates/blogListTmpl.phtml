@@ -5,19 +5,19 @@ use Transoft\Blog\ViewModel\Bloglist;
 /** @var Bloglist $bloglistViewModel */
 
 $bloglistViewModel = $block->getData('bloglist_view_model');
-$data = $bloglistViewModel->retrieveModel()->getData();
+$data = $bloglistViewModel->getPostCollection()->getData();
 $match = $bloglistViewModel->isTypesMatching();
 
 ?>
 <?php if ($match): ?>
     <div>
-        <h3>Latest 5 blogs:</h3>
+        <h3><?= /* @noEscape */ __('Latest 5 blogs:') ?></h3>
         <ul>
             <?php foreach ($data as $value):
                 $item = $value['theme'];
                 $url = $block->escapeUrl($bloglistViewModel->getUrlById($value['blog_id']));
                 ?>
-                <?= $block->escapeHtml("<li><a href='$url'>$item</a></li>", ['a','li']) ?>
+                <?=  /* @noEscape */ "<li><a href='$url'>$item</a></li>" ?>
             <?php endforeach; ?>
         </ul>
     </div>

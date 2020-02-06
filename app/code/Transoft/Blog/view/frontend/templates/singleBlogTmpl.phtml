@@ -1,12 +1,14 @@
 <?php
-use Transoft\Blog\ViewModel\Singleblog;
 
-/** @var \Transoft\Blog\Block\Singleblog $block*/
-/** @var Singleblog $singleBlogViewModel */
+use Transoft\Blog\Block\Singleblog;
+use Transoft\Blog\ViewModel\Bloglist;
 
-$singleBlogViewModel = $block->getData('singleblog_view_model');
+/** @var Singleblog $block*/
+/** @var Bloglist $bloglistViewModel */
+
+$bloglistViewModel = $block->getData('bloglist_view_model');
 $id = $block->getRequest()->getParam('id');
-$data = $singleBlogViewModel->getBlogById($id);
+$data = $bloglistViewModel->getBlogById($id);
 
 ?>
 

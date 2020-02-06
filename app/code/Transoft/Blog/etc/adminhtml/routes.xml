@@ -4,7 +4,7 @@
     <!--Use router 'standard' for frontend route-->
     <router id="admin">
         <!--Define a custom route with id and frontName-->
-        <route id="transoft_blog" frontName="transoft_blog">
+        <route id="blog" frontName="blog">
             <module name="Transoft_Blog"/>
         </route>
     </router>

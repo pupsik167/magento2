@@ -17,7 +17,7 @@ class Index extends Action implements HttpGetActionInterface
     /**
      * @var bool|PageFactory
      */
-    protected $resultPageFactory = false;
+    protected $resultPageFactory;
 
     /**
      * Constructor.

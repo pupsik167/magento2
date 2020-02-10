@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Model;
 
 use Magento\Framework\Filesystem\Io\File;
@@ -7,14 +8,11 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory;
 
 /**
- * Class DataProvider
- *
- * Generates data provider
+ * Blog model ui data provider
  */
 class DataProvider extends AbstractDataProvider
 {
-    protected $collection;
-    protected $_loadedData;
+    private $_loadedData;
     private $file;
 
     /**
@@ -43,9 +41,7 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
-     * Get provider data
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getData()
     {
@@ -57,14 +53,14 @@ class DataProvider extends AbstractDataProvider
 
         foreach ($items as $post) {
             $postData = $post->getData();
-            $path_parts = $this->file->getPathInfo($postData['image_url']);
+            $path_parts = $this->file->getPathInfo($postData['image_path']);
             $post_img = [
                 ['type'=>'image',
                  'name' => $path_parts['filename'],
-                 'url' => $postData['image_url']
+                 'url' => $postData['image_path']
                 ]
             ];
-            $postData['image_url'] = $post_img;
+            $postData['image_path'] = $post_img;
             $this->_loadedData[$post->getId()] = $postData;
         }
 

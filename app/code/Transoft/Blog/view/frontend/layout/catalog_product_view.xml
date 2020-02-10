@@ -4,7 +4,7 @@
         <referenceContainer name="content">
             <block name="blog.bloglist" before="product.info.main" template="Transoft_Blog::blogListTmpl.phtml">
                 <arguments>
-                    <argument name="bloglist_view_model" xsi:type="object">Transoft\Blog\ViewModel\Bloglist</argument>
+                    <argument name="bloglist" xsi:type="object">Transoft\Blog\Block\Bloglist</argument>
                 </arguments>
             </block>
         </referenceContainer>

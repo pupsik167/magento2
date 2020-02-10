@@ -15,7 +15,7 @@
             <argument name="resourceModel" xsi:type="string">Transoft\Blog\Model\ResourceModel\Post</argument>
         </arguments>
     </type>
-    <virtualType name="ImageUploader" type="Magento\Catalog\Model\ImageUploader">
+    <virtualType name="BlogImageUploader" type="Magento\Catalog\Model\ImageUploader">
         <arguments>
             <argument name="baseTmpPath" xsi:type="string">index/upload/tmp/image</argument>
             <argument name="basePath" xsi:type="string">index/upload/image</argument>
@@ -29,7 +29,7 @@
     </virtualType>
     <type name="Transoft\Blog\Controller\Adminhtml\Index\Upload">
         <arguments>
-            <argument name="imageUploader" xsi:type="object">VirtualTypeName</argument>
+            <argument name="imageUploader" xsi:type="object">BlogImageUploader</argument>
         </arguments>
     </type>
 </config>

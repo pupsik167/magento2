@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Controller\Adminhtml\Post;
 
 use Magento\Backend\App\Action;
@@ -8,16 +9,14 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\PageFactory;
 
 /**
- * Class Index
- *
- * Index controller class
+ * Post index controller
  */
 class Index extends Action implements HttpGetActionInterface
 {
     /**
      * @var bool|PageFactory
      */
-    protected $resultPageFactory;
+    private $resultPageFactory;
 
     /**
      * Constructor.

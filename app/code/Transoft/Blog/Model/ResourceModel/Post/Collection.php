@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Model\ResourceModel\Post;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Transoft\Blog\Model\Post;
 
 /**
- * Class Collection
- *
  * Post resource model collection class
  */
 class Collection extends AbstractCollection

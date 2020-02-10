@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Controller\Adminhtml\Post;
 
 use Magento\Backend\App\Action;
@@ -9,13 +10,11 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
 /**
- * Class Save
- *
- * Save controller class
+ * Post save controller
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Post';
+    const ADMIN_RESOURCE = 'Transoft_Blog::post';
 
     /**
      * @var PostCollectionFactory $postCollectionFactory
@@ -55,8 +54,8 @@ class Save extends Action implements HttpPostActionInterface
         if ($data) {
             try {
                 $id = $data['blog_id'];
-                $image_url = isset($data['image_url']) ? $data['image_url'][0]['url'] : '';
-                $data['image_url'] = $image_url;
+                $imageUrl = $data['image_path'][0]['url'] ?? '';
+                $data['image_path'] = $imageUrl;
 
                 $post = $this->postCollectionFactory->create()
                     ->addFieldToFilter('blog_id', ['eq' => $id])->getFirstItem();
@@ -66,7 +65,8 @@ class Save extends Action implements HttpPostActionInterface
                 $post->setData($data);
                 $post->save();
                 $this->messageManager->addSuccess(__('Successfully saved the item.'));
-                $this->dataPersistor->set('formData', false);
+                $this->dataPersistor->set('blog_data', false);
+                $this->dataPersistor->clear('blog_data');
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
                 $this->messageManager->addError($e->getMessage());
@@ -76,5 +76,13 @@ class Save extends Action implements HttpPostActionInterface
         }
 
         return $resultRedirect->setPath('*/*/');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Transoft_Blog::blog_manage_items');
     }
 }

@@ -1,19 +1,18 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Block\Adminhtml\Post\Edit;
 
 use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * Class DeleteButton
- *
- *  Delete button block class
+ *  Generates delete button
  */
 class DeleteButton extends GenericButton implements ButtonProviderInterface
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getButtonData()
     {

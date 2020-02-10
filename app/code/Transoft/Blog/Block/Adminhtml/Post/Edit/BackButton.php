@@ -1,21 +1,18 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Block\Adminhtml\Post\Edit;
 
 use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
- * Class BackButton
- *
  * Generates back button
  */
 class BackButton extends GenericButton implements ButtonProviderInterface
 {
     /**
-     * Get button params
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getButtonData()
     {

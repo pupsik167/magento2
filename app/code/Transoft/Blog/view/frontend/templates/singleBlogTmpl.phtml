@@ -1,26 +1,25 @@
 <?php
-
-use Transoft\Blog\Block\Singleblog;
-use Transoft\Blog\ViewModel\Bloglist;
-
-/** @var Singleblog $block*/
-/** @var Bloglist $bloglistViewModel */
-
-$bloglistViewModel = $block->getData('bloglist_view_model');
-$id = $block->getRequest()->getParam('id');
-$data = $bloglistViewModel->getBlogById($id);
-
+use Transoft\Blog\Block\Bloglist;
+?>
+<?php /** @var Bloglist $block*/ ?>
+<?php
+$bloglist = $block->getData('bloglist');
+$id = $bloglist->getBlogId();
+$blog = $bloglist->getBlogById($id);
 ?>
 
 <div>
-    <h3><?= $block->escapeHtml($data['theme']) ?></h3>
+    <h3><?= $block->escapeHtml($blog->getTheme()) ?></h3>
     <div>
         <span><strong>Content:</strong></span>
-        <p><?= $block->escapeHtml($data['content']) ?></p>
+        <p><?= $block->escapeHtml($blog->getContent()) ?></p>
         <span><strong>Image:</strong></span>
-        <?php $image_url = $data['image_url']; ?>
-        <?= $block->escapeHtml("<img src='$image_url' />", ['img']) ?>
+        <img src="<?= $block->escapeUrl($blog->getImagePath()) ?>"
+             alt="<?= $block->escapeHtmlAttr(__("Image")) ?>"
+             width="<?= $block->escapeHtmlAttr("300") ?>"
+             height="<?= $block->escapeHtmlAttr("300") ?>"
+        />
         <span><strong>Created at:</strong></span>
-        <p><?= $block->escapeHtml($data['creation_time']) ?></p>
+        <p><?= $block->escapeHtml($blog->getCreationTime()) ?></p>
     </div>
 </div>

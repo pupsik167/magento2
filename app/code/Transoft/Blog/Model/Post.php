@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Model;
 
 use Transoft\Blog\Model\ResourceModel;
@@ -7,8 +8,6 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 
 /**
- * Class Post
- *
  * Post model class
  */
 class Post extends AbstractModel implements IdentityInterface
@@ -26,7 +25,7 @@ class Post extends AbstractModel implements IdentityInterface
     protected $_eventPrefix = 'transoft_blog_post_collection';
 
     /**
-     * Constructor.
+     * Define post resource model
      */
     protected function _construct()
     {
@@ -34,22 +33,10 @@ class Post extends AbstractModel implements IdentityInterface
     }
 
     /**
-     * Get post identities
-     *
-     * @return array|string[]
+     * @inheritdoc
      */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
-    }
-
-    /**
-     * Get post default values
-     *
-     * @return array
-     */
-    public function getDefaultValues()
-    {
-        return [];
     }
 }

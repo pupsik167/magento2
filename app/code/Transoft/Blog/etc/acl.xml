@@ -4,12 +4,10 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Transoft_Blog::post" title="Blog Title"
+                <resource id="Transoft_Blog::post" title="Blog Posts"
                           sortOrder="10" >
                     <resource id="Transoft_Blog::blog_manage_items"
                               title="Manage Items" sortOrder="0" />
-                    <resource id="Transoft_Blog::blog_configuration"
-                              title="Configuration" sortOrder="100" />
                 </resource>
             </resource>
         </resources>

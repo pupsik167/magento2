@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
- * Class Post
- *
  * Post resource model class
  */
 class Post extends AbstractDb

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Transoft\Blog\Controller\Adminhtml\Post;
+namespace Transoft\Blog\Controller\Adminhtml\Index;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -9,12 +9,10 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\View\Result\PageFactory;
 
 /**
- * Edit post controller
+ * Admin index controller
  */
-class Edit extends Action implements HttpGetActionInterface
+class Index extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::post ';
-
     /**
      * @var bool|PageFactory
      */
@@ -30,8 +28,8 @@ class Edit extends Action implements HttpGetActionInterface
         Context $context,
         PageFactory $resultPageFactory
     ) {
-        $this->resultPageFactory = $resultPageFactory;
         parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**

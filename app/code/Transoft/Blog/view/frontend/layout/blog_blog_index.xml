@@ -7,9 +7,9 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block name="blog.singleblog" template="Transoft_Blog::singleBlogTmpl.phtml">
+            <block name="blog.bloglist" template="Transoft_Blog::singleBlogTmpl.phtml">
                 <arguments>
-                    <argument name="bloglist_view_model" xsi:type="object">Transoft\Blog\ViewModel\Bloglist</argument>
+                    <argument name="bloglist" xsi:type="object">Transoft\Blog\Block\Bloglist</argument>
                 </arguments>
             </block>
         </referenceContainer>

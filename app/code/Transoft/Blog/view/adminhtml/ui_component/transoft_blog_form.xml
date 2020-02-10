@@ -101,7 +101,7 @@
                 <dataScope>creation_time</dataScope>
             </settings>
         </field>
-        <field name="image_url" sortOrder="40" formElement="imageUploader">
+        <field name="image_path" sortOrder="40" formElement="imageUploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">post</item>

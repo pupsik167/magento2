@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Transoft\Blog\Model\ResourceModel\Post\Grid;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
@@ -16,8 +17,6 @@ use Psr\Log\LoggerInterface;
 use Transoft\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 
 /**
- * Class Collection
- *
  * Post resource model grid collection class
  */
 class Collection extends PostCollection implements SearchResultInterface
@@ -25,7 +24,7 @@ class Collection extends PostCollection implements SearchResultInterface
     /**
      * @var AggregationInterface
      */
-    protected $aggregations;
+    private $aggregations;
 
     /**
      * Constructor.
@@ -72,9 +71,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Get collection aggregations
-     *
-     * @return AggregationInterface
+     * @inheritdoc
      */
     public function getAggregations()
     {
@@ -82,11 +79,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Set collection aggregations
-     *
-     * @param AggregationInterface $aggregations
-     *
-     * @return $this
+     * @inheritdoc
      */
     public function setAggregations($aggregations)
     {
@@ -95,9 +88,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Get search criteria.
-     *
-     * @return SearchCriteriaInterface|null
+     * @inheritdoc
      */
     public function getSearchCriteria()
     {
@@ -105,11 +96,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Set search criteria.
-     *
-     * @param SearchCriteriaInterface $searchCriteria
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @inheritdoc
      */
     public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
@@ -117,9 +104,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Get total count.
-     *
-     * @return int
+     * @inheritdoc
      */
     public function getTotalCount()
     {
@@ -127,11 +112,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Set total count.
-     *
-     * @param int $totalCount
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @inheritdoc
      */
     public function setTotalCount($totalCount)
     {
@@ -139,11 +120,7 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Set items list.
-     *
-     * @param ExtensibleDataInterface[] $items
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @inheritdoc
      */
     public function setItems(array $items = null)
     {

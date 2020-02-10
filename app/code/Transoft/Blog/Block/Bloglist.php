@@ -123,9 +123,7 @@ class Bloglist extends Template implements ArgumentInterface
      */
     public function getBlogById($id)
     {
-        $item = $this->postCollection->create()
+        return $this->postCollection->create()
             ->addFieldToFilter('blog_id', ['eq' => $id])->getFirstItem();
-
-        return $item;
     }
 }

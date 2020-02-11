@@ -3,49 +3,66 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Controller\Adminhtml\Post;
 
-use Magento\Backend\App\Action;
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\Action\HttpGetActionInterface;
-use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\View\Result\PageFactory;
+use Transoft\Blog\Model\ModelFactory;
+use Transoft\Blog\Model\ModelRepository;
 
 /**
  * Delete post controller
  */
-class Delete extends Action implements HttpGetActionInterface
+class Delete extends Action implements HttpPostActionInterface
 {
-    private $resultPageFactory;
-    private $postCollectionFactory;
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
 
     /**
-     * Constructor
-     *
+     * Index resultPageFactory
+     * @var PageFactory
+     */
+    private $resultPageFactory;
+
+    /**
+     * @var
+     */
+    private $modelFactory;
+
+    /**
+     * @var
+     */
+    private $modelRepository;
+
+    /**
+     * Index constructor.
      * @param Context $context
      * @param PageFactory $resultPageFactory
-     * @param PostCollectionFactory $postCollectionFactory
+     * @param ModelFactory $modelFactory
+     * @param ModelRepository $modelRepository
      */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        PostCollectionFactory $postCollectionFactory
+        ModelFactory $modelFactory,
+        ModelRepository $modelRepository
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->postCollectionFactory = $postCollectionFactory;
-        parent::__construct($context);
+        $this->modelFactory = $modelFactory;
+        $this->modelRepository = $modelRepository;
+        return parent::__construct($context);
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function execute()
     {
         $id = (int)$this->getRequest()->getParam('id');
 
-        $post = $this->postCollectionFactory->create()
-            ->addFieldToFilter('blog_id', ['eq' => $id])->getFirstItem();
+        $post = $this->modelFactory->create()->load($id);
 
         if (!$id) {
-            $this->messageManager->addError(__('Unable to process, there is no post with this ID.'));
+            $this->messageManager->addError(__('Unable to delete there is no post with this ID.'));
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('*/*/', ['_current' => true]);
         }
@@ -56,7 +73,7 @@ class Delete extends Action implements HttpGetActionInterface
         } catch (\Exception $e) {
             $this->messageManager->addError(__('Error while trying to delete post'));
             $resultRedirect = $this->resultRedirectFactory->create();
-            return $resultRedirect->setPath('*/*/index', ['_current' => true]);
+            return $resultRedirect->setPath('*/*/', ['_current' => true]);
         }
 
         $resultRedirect = $this->resultRedirectFactory->create();

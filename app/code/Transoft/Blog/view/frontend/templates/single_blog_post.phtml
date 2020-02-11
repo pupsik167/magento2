@@ -1,9 +1,9 @@
 <?php
-use Transoft\Blog\Block\Bloglist;
+use Transoft\Blog\Block\SingleBlog;
 ?>
-<?php /** @var Bloglist $block*/ ?>
+<?php /** @var SingleBlog $block*/ ?>
 <?php
-$bloglist = $block->getData('bloglist');
+$bloglist = $block->getData('single_blog');
 $id = $bloglist->getBlogId();
 $blog = $bloglist->getBlogById($id);
 ?>
@@ -16,10 +16,10 @@ $blog = $bloglist->getBlogById($id);
         <span><strong>Image:</strong></span>
         <img src="<?= $block->escapeUrl($blog->getImagePath()) ?>"
              alt="<?= $block->escapeHtmlAttr(__("Image")) ?>"
-             width="<?= $block->escapeHtmlAttr("300") ?>"
-             height="<?= $block->escapeHtmlAttr("300") ?>"
+             width="300"
+             height="300"
         />
         <span><strong>Created at:</strong></span>
-        <p><?= $block->escapeHtml($blog->getCreationTime()) ?></p>
+        <p><?= $blog->getCreationTime() ?></p>
     </div>
 </div>

@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Transoft_Blog::web/css/source/_blogs.less"/>
+    </head>
     <body>
         <referenceContainer name="content">
-            <block name="blog.bloglist" before="product.info.main" template="Transoft_Blog::blogListTmpl.phtml">
+            <block name="blog.bloglist" before="product.info.main" template="Transoft_Blog::blog_post_list.phtml">
                 <arguments>
                     <argument name="bloglist" xsi:type="object">Transoft\Blog\Block\Bloglist</argument>
                 </arguments>

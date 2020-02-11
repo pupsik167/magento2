@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Transoft_Blog::web/css/source/_blogs.less"/>
+    </head>
     <body>
         <referenceBlock name="page.main.title">
             <action method="setPageTitle">
@@ -7,9 +10,9 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block name="blog.bloglist" template="Transoft_Blog::singleBlogTmpl.phtml">
+            <block name="blog.single_blog" template="Transoft_Blog::single_blog_post.phtml">
                 <arguments>
-                    <argument name="bloglist" xsi:type="object">Transoft\Blog\Block\Bloglist</argument>
+                    <argument name="single_blog" xsi:type="object">Transoft\Blog\Block\SingleBlog</argument>
                 </arguments>
             </block>
         </referenceContainer>

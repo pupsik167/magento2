@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Transoft\Blog\Api\ModelRepositoryInterface"
+                type="Transoft\Blog\Model\ModelRepository" />
+    <preference for="Transoft\Blog\Api\Data\ModelInterface"
+                type="Transoft\Blog\Model\Model" />
+    <preference for="Transoft\Blog\Api\Data\ModelSearchResultsInterface"
+                type="Transoft\Blog\Model\ModelSearchResults" />
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
@@ -12,19 +18,13 @@
             <argument name="mainTable" xsi:type="string">transoft_blog</argument>
             <argument name="eventPrefix" xsi:type="string">transoft_blog_post_collection</argument>
             <argument name="eventObject" xsi:type="string">post_grid_collection</argument>
-            <argument name="resourceModel" xsi:type="string">Transoft\Blog\Model\ResourceModel\Post</argument>
+            <argument name="resourceModel" xsi:type="string">Transoft\Blog\Model\ResourceModel\Model</argument>
         </arguments>
     </type>
     <virtualType name="BlogImageUploader" type="Magento\Catalog\Model\ImageUploader">
         <arguments>
-            <argument name="baseTmpPath" xsi:type="string">index/upload/tmp/image</argument>
-            <argument name="basePath" xsi:type="string">index/upload/image</argument>
-            <argument name="allowedExtensions" xsi:type="array">
-                <item name="jpg" xsi:type="string">jpg</item>
-                <item name="jpeg" xsi:type="string">jpeg</item>
-                <item name="gif" xsi:type="string">gif</item>
-                <item name="png" xsi:type="string">png</item>
-            </argument>
+            <argument name="baseTmpPath" xsi:type="string">blog/tmp/image</argument>
+            <argument name="basePath" xsi:type="string">blog/image</argument>
         </arguments>
     </virtualType>
     <type name="Transoft\Blog\Controller\Adminhtml\Index\Upload">
@@ -32,4 +32,32 @@
             <argument name="imageUploader" xsi:type="object">BlogImageUploader</argument>
         </arguments>
     </type>
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Transoft\Blog\Api\Data\ModelInterface" xsi:type="string">Transoft\Blog\Api\ModelRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Transoft\Blog\Model\Api\SearchCriteria\ModelCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Transoft\Blog\Model\Api\SearchCriteria\CollectionProcessor\ModelFilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Transoft\Blog\Model\ModelRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Transoft\Blog\Model\Api\SearchCriteria\ModelCollectionProcessor</argument>
+        </arguments>
+    </type>
+    <virtualType name="Transoft\Blog\Model\Api\SearchCriteria\CollectionProcessor\ModelFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="store_id" xsi:type="object">Transoft\Blog\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\ModelStoreFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>

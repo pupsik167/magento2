@@ -13,10 +13,10 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Edit extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::post ';
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_items';
 
     /**
-     * @var bool|PageFactory
+     * @var PageFactory
      */
     private $resultPageFactory;
 
@@ -40,13 +40,5 @@ class Edit extends Action implements HttpGetActionInterface
     public function execute()
     {
         return $this->resultPageFactory->create();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Transoft_Blog::blog_manage_items');
     }
 }

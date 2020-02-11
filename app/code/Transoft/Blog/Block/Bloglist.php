@@ -4,24 +4,21 @@ declare(strict_types=1);
 namespace Transoft\Blog\Block;
 
 use Magento\Catalog\Model\Locator\RegistryLocator;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Element\Template;
-use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Transoft\Blog\Model\ModelRepository;
 
 /**
  * Generates blog list
  */
 class Bloglist extends Template implements ArgumentInterface
 {
-    /**
-     * @var PostCollectionFactory
-     */
-    protected $postCollection;
-
     /**
      * @var RequestInterface $request
      */
@@ -43,38 +40,62 @@ class Bloglist extends Template implements ArgumentInterface
     private $registryLocator;
 
     /**
-     * Constructor.
+     * @var ModelRepository
+     */
+    private $modelRepository;
+
+    /**
+     * @var SortOrderBuilder $sortOrderBuilder
+     */
+    private $sortOrderBuilder;
+
+    /**
+     * @var SearchCriteriaBuilder $searchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+
+    /**
+     * Creates Bloglist block
      *
-     * @param PostCollectionFactory $postCollectionFactory
      * @param RequestInterface $request
      * @param UrlInterface $urlBuilder
      * @param RegistryLocator $registryLocator
      * @param ScopeConfigInterface $scopeInterface
+     * @param ModelRepository $modelRepository
+     * @param SortOrderBuilder $sortOrderBuilder
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
      */
     public function __construct(
-        PostCollectionFactory $postCollectionFactory,
         RequestInterface $request,
         UrlInterface $urlBuilder,
         RegistryLocator $registryLocator,
-        ScopeConfigInterface $scopeInterface
+        ScopeConfigInterface $scopeInterface,
+        ModelRepository $modelRepository,
+        SortOrderBuilder $sortOrderBuilder,
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->postCollection = $postCollectionFactory;
         $this->request = $request;
         $this->urlBuilder = $urlBuilder;
         $this->registryLocator = $registryLocator;
         $this->scopeInterface = $scopeInterface;
+        $this->modelRepository = $modelRepository;
+        $this->sortOrderBuilder = $sortOrderBuilder;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
     /**
-     * Returns model collection
+     * Returns model collection items
      *
      * @return mixed
      */
-    public function getPostCollection()
+    public function getLatestPostItems()
     {
-        $collection = $this->postCollection->create();
-        $collection->setOrder('creation_time', 'DESC')->setPageSize(5);
-        return $collection;
+        $this->sortOrderBuilder->setField('creation_time');
+        $this->sortOrderBuilder->setDescendingDirection();
+        $this->searchCriteriaBuilder->addSortOrder($this->sortOrderBuilder->create());
+        $this->searchCriteriaBuilder->setPageSize(5);
+        $searchResult = $this->modelRepository->getList(($this->searchCriteriaBuilder->create()));
+        return $searchResult->getItems();
     }
 
     /**
@@ -112,18 +133,5 @@ class Bloglist extends Template implements ArgumentInterface
     public function getUrlById(int $id) : string
     {
         return $this->urlBuilder->getUrl('blog/blog/index', ['id' => $id]);
-    }
-
-    /**
-     * Returns blog by id
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function getBlogById($id)
-    {
-        return $this->postCollection->create()
-            ->addFieldToFilter('blog_id', ['eq' => $id])->getFirstItem();
     }
 }

@@ -3,17 +3,36 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Model;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Transoft\Blog\Model\ResourceModel\Post\CollectionFactory;
+use Transoft\Blog\Model\ModelRepository;
+use Transoft\Blog\Model\ResourceModel\Model\CollectionFactory;
 
 /**
  * Blog model ui data provider
  */
 class DataProvider extends AbstractDataProvider
 {
-    private $_loadedData;
+    /**
+     * @var array
+     */
+    protected $_loadedData;
+
+    /**
+     * @var File $file
+     */
     private $file;
+
+    /**
+     * @var ModelRepository
+     */
+    private $modelRepository;
+
+    /**
+     * @var SearchCriteriaBuilder $searchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
 
     /**
      * Constructor.
@@ -23,6 +42,8 @@ class DataProvider extends AbstractDataProvider
      * @param string $requestFieldName
      * @param File $file
      * @param CollectionFactory $postCollectionFactory
+     * @param ModelRepository $modelRepository
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param array $meta
      * @param array $data
      */
@@ -32,11 +53,15 @@ class DataProvider extends AbstractDataProvider
         $requestFieldName,
         File $file,
         CollectionFactory $postCollectionFactory,
+        ModelRepository $modelRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
         array $meta = [],
         array $data = []
     ) {
         $this->collection = $postCollectionFactory->create();
         $this->file = $file;
+        $this->modelRepository = $modelRepository;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
@@ -49,18 +74,18 @@ class DataProvider extends AbstractDataProvider
             return $this->_loadedData;
         }
 
-        $items = $this->collection->getItems();
+        $items = $this->modelRepository->getList(($this->searchCriteriaBuilder->create()))->getItems();
 
         foreach ($items as $post) {
             $postData = $post->getData();
             $path_parts = $this->file->getPathInfo($postData['image_path']);
-            $post_img = [
+            $postImg = [
                 ['type'=>'image',
                  'name' => $path_parts['filename'],
                  'url' => $postData['image_path']
                 ]
             ];
-            $postData['image_path'] = $post_img;
+            $postData['image_path'] = $postImg;
             $this->_loadedData[$post->getId()] = $postData;
         }
 

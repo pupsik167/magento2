@@ -11,7 +11,7 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
  */
 class NewAction extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::post';
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_items';
 
     /**
      * @inheritdoc

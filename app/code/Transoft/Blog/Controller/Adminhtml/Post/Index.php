@@ -13,8 +13,10 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Index extends Action implements HttpGetActionInterface
 {
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
+
     /**
-     * @var bool|PageFactory
+     * @var PageFactory
      */
     private $resultPageFactory;
 

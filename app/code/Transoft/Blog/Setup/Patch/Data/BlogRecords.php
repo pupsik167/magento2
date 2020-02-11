@@ -14,10 +14,10 @@ use Transoft\Blog\Model\ResourceModel\Post as BlogResourceModel;
 class BlogRecords implements DataPatchInterface
 {
     /** @var ModuleDataSetupInterface */
-    protected $moduleDataSetup;
+    private $moduleDataSetup;
 
     /** @var AdapterInterface */
-    protected $adapterInterface;
+    private $adapterInterface;
 
     /**
      * Constructor.

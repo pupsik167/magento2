@@ -6,8 +6,8 @@ namespace Transoft\Blog\Controller\Adminhtml\Post;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
-use Transoft\Blog\Model\ModelFactory;
 use Transoft\Blog\Model\ModelRepository;
 
 /**
@@ -24,12 +24,7 @@ class Delete extends Action implements HttpPostActionInterface
     private $resultPageFactory;
 
     /**
-     * @var
-     */
-    private $modelFactory;
-
-    /**
-     * @var
+     * @var ModelRepository $modelRepository
      */
     private $modelRepository;
 
@@ -37,38 +32,37 @@ class Delete extends Action implements HttpPostActionInterface
      * Index constructor.
      * @param Context $context
      * @param PageFactory $resultPageFactory
-     * @param ModelFactory $modelFactory
      * @param ModelRepository $modelRepository
      */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        ModelFactory $modelFactory,
         ModelRepository $modelRepository
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->modelFactory = $modelFactory;
         $this->modelRepository = $modelRepository;
         return parent::__construct($context);
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws NoSuchEntityException
      */
     public function execute()
     {
         $id = (int)$this->getRequest()->getParam('id');
 
-        $post = $this->modelFactory->create()->load($id);
+        $post = $this->modelRepository->getById($id);
 
-        if (!$id) {
-            $this->messageManager->addError(__('Unable to delete there is no post with this ID.'));
+        if (!$post->getBlogId()) {
+            $this->messageManager->addError(__('Blog post no longer exists.'));
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('*/*/', ['_current' => true]);
         }
 
         try {
-            $post->delete();
+            $this->modelRepository->delete($post);
             $this->messageManager->addSuccess(__('Your post has been deleted!'));
         } catch (\Exception $e) {
             $this->messageManager->addError(__('Error while trying to delete post'));

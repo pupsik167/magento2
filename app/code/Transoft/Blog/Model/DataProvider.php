@@ -80,7 +80,7 @@ class DataProvider extends AbstractDataProvider
             $postData = $post->getData();
             $path_parts = $this->file->getPathInfo($postData['image_path']);
             $postImg = [
-                ['type'=>'image',
+                ['type' => 'image',
                  'name' => $path_parts['filename'],
                  'url' => $postData['image_path']
                 ]

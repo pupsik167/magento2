@@ -81,7 +81,7 @@ class Save extends Action implements HttpPostActionInterface
                 $data['blog_id'] = null;
             }
 
-            $model = $this->modelFactory->create();
+            $post = $this->modelFactory->create();
 
             $id = $this->getRequest()->getParam('id');
             $image_url = $data['image_path'][0]['url'];
@@ -89,20 +89,18 @@ class Save extends Action implements HttpPostActionInterface
 
             if ($id) {
                 try {
-                    $model = $this->modelRepository->getById($id);
+                    $post = $this->modelRepository->getById($id);
                 } catch (LocalizedException $e) {
                     $this->messageManager->addErrorMessage(__('This post no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
             }
 
-            $model->setData($data);
-
             try {
-                $this->modelRepository->save($model);
+                $this->modelRepository->save($post);
                 $this->messageManager->addSuccessMessage(__('You saved the post.'));
                 $this->dataPersistor->clear('transoft_blog');
-                return $this->processBlockReturn($model, $data, $resultRedirect);
+                return $this->processBlockReturn($post, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\Exception $e) {

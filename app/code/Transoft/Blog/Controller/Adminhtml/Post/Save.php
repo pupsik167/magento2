@@ -76,7 +76,7 @@ class Save extends Action implements HttpPostActionInterface
                 $data['blog_id'] = null;
             }
 
-            $post = $this->blogFactory->create();
+            $post = $this->blogFactory->create(['data' => $data]);
 
             $id = $this->getRequest()->getParam('id');
             $image_url = $data['image_path'][0]['url'] ?? '';
@@ -113,7 +113,6 @@ class Save extends Action implements HttpPostActionInterface
      * @param array $data
      * @param ResultInterface $resultRedirect
      * @return ResultInterface
-     * @throws CouldNotSaveException
      */
     private function processBlockReturn($blog, $data, $resultRedirect) : ResultInterface
     {
@@ -126,7 +125,6 @@ class Save extends Action implements HttpPostActionInterface
         } elseif ($redirect === 'duplicate') {
             $duplicateBlog = $this->blogFactory->create(['data' => $data]);
             $duplicateBlog->setBlogId(null);
-            $duplicateBlog = $this->blogRepository->save($duplicateBlog);
             $id = $duplicateBlog->getBlogId();
             $this->messageManager->addSuccessMessage(__('You duplicated post.'));
             $this->dataPersistor->set('transoft_blog', $data);

@@ -79,8 +79,8 @@ class Save extends Action implements HttpPostActionInterface
             $post = $this->blogFactory->create(['data' => $data]);
 
             $id = $this->getRequest()->getParam('id');
-            $image_url = $data['image_path'][0]['url'] ?? '';
-            $data['image_path'] = $image_url;
+            $imagePath = $data['image_path'][0]['url'] ?? '';
+            $data['image_path'] = $imagePath;
 
             if ($id) {
                 try {
@@ -112,9 +112,9 @@ class Save extends Action implements HttpPostActionInterface
      * @param Blog $blog
      * @param array $data
      * @param ResultInterface $resultRedirect
-     * @return ResultInterface
+     * @return ResultInterface $resultRedirect
      */
-    private function processBlockReturn($blog, $data, $resultRedirect) : ResultInterface
+    private function processBlockReturn($blog, $data, $resultRedirect)
     {
         $redirect = $data['back'] ?? 'close';
 

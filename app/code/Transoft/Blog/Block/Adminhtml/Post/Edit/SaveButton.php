@@ -5,6 +5,7 @@ namespace Transoft\Blog\Block\Adminhtml\Post\Edit;
 
 use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Magento\Ui\Component\Control\Container;
 
 /**
  * Generates save button
@@ -17,23 +18,83 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
     public function getButtonData()
     {
         return [
-            'label' => __('Save Post'),
+            'label' => __('Save'),
             'class' => 'save primary',
             'data_attribute' => [
-                'mage-init' => ['button' => ['event' => 'save']],
-                'form-role' => 'save',
+                'mage-init' => [
+                    'buttonAdapter' => [
+                        'actions' => [
+                            [
+                                'targetName' => 'transoft_blog_form.transoft_blog_form',
+                                'actionName' => 'save',
+                                'params' => [
+                                    true,
+                                    [
+                                        'back' => 'continue'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ],
-            'sort_order' => 90
+            'class_name' => Container::SPLIT_BUTTON,
+            'options' => $this->getOptions(),
         ];
     }
 
     /**
-     * Get save url
+     * Get save options
      *
-     * @return string
+     * @return array
      */
-    public function getSaveUrl()
+    private function getOptions()
     {
-        return $this->getUrl('*/*/save', []);
+        return [
+            [
+                'label' => __('Save & Duplicate'),
+                'id_hard' => 'save_and_duplicate',
+                'data_attribute' => [
+                    'mage-init' => [
+                        'buttonAdapter' => [
+                            'actions' => [
+                                [
+                                    'targetName' => 'transoft_blog_form.transoft_blog_form',
+                                    'actionName' => 'save',
+                                    'params' => [
+                                        true,
+                                        [
+                                            'back' => 'duplicate'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'id_hard' => 'save_and_close',
+                'label' => __('Save & Close'),
+                'data_attribute' => [
+                    'mage-init' => [
+                        'buttonAdapter' => [
+                            'actions' => [
+                                [
+                                    'targetName' => 'transoft_blog_form.transoft_blog_form',
+                                    'actionName' => 'save',
+                                    'params' => [
+                                        true,
+                                        [
+                                            'back' => 'close'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 }

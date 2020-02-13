@@ -5,10 +5,12 @@ namespace Transoft\Blog\Controller\Adminhtml\Post;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Result\PageFactory;
-use Transoft\Blog\Model\ModelRepository;
+use Transoft\Blog\Model\BlogRepository;
 
 /**
  * Delete post controller
@@ -24,47 +26,51 @@ class Delete extends Action implements HttpPostActionInterface
     private $resultPageFactory;
 
     /**
-     * @var ModelRepository $modelRepository
+     * @var BlogRepository $blogRepository
      */
-    private $modelRepository;
+    private $blogRepository;
 
     /**
      * Index constructor.
      * @param Context $context
      * @param PageFactory $resultPageFactory
-     * @param ModelRepository $modelRepository
+     * @param BlogRepository $blogRepository
      */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        ModelRepository $modelRepository
+        BlogRepository $blogRepository
     ) {
         $this->resultPageFactory = $resultPageFactory;
-        $this->modelRepository = $modelRepository;
+        $this->blogRepository = $blogRepository;
         return parent::__construct($context);
     }
 
     /**
      * @inheritDoc
      *
-     * @throws NoSuchEntityException
+     * @throws NotFoundException
      */
     public function execute()
     {
         $id = (int)$this->getRequest()->getParam('id');
 
-        $post = $this->modelRepository->getById($id);
+        try {
+            $post = $this->blogRepository->getById($id);
+        } catch (\Exception $e) {
+            throw new NotFoundException(__($e->getMessage()));
+        }
 
-        if (!$post->getBlogId()) {
+        if (!$post->getId()) {
             $this->messageManager->addError(__('Blog post no longer exists.'));
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('*/*/', ['_current' => true]);
         }
 
         try {
-            $this->modelRepository->delete($post);
+            $this->blogRepository->delete($post);
             $this->messageManager->addSuccess(__('Your post has been deleted!'));
-        } catch (\Exception $e) {
+        } catch (CouldNotDeleteException $e) {
             $this->messageManager->addError(__('Error while trying to delete post'));
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('*/*/', ['_current' => true]);

@@ -27,8 +27,6 @@ class Collection extends PostCollection implements SearchResultInterface
     private $aggregations;
 
     /**
-     * Constructor.
-     *
      * @param EntityFactoryInterface $entityFactory
      * @param LoggerInterface $logger
      * @param FetchStrategyInterface $fetchStrategy

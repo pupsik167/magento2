@@ -6,26 +6,25 @@ namespace Transoft\Blog\Model;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
-use Transoft\Blog\Api\Data\ModelInterface;
-use Transoft\Blog\Api\Data\ModelInterfaceFactory;
-use Transoft\Blog\Api\Data\ModelSearchResultsInterface;
-use Transoft\Blog\Api\Data\ModelSearchResultsInterfaceFactory;
-use Transoft\Blog\Api\ModelRepositoryInterface;
-use Transoft\Blog\Model\ResourceModel\Model as ResourceModel;
-use Transoft\Blog\Model\ResourceModel\Model\Collection;
-use Transoft\Blog\Model\ResourceModel\Model\CollectionFactory as ModelCollectionFactory;
+use Transoft\Blog\Api\BlogRepositoryInterface;
+use Transoft\Blog\Api\Data\BlogInterface;
+use Transoft\Blog\Api\Data\BlogInterfaceFactory;
+use Transoft\Blog\Model\ResourceModel\Blog as ResourceModel;
+use Transoft\Blog\Model\ResourceModel\Blog\Collection;
+use Transoft\Blog\Model\ResourceModel\Blog\CollectionFactory as BlogCollectionFactory;
 
 /**
- * Class BlockRepository
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * Blog repository class
  */
-class ModelRepository implements ModelRepositoryInterface
+class BlogRepository implements BlogRepositoryInterface
 {
     /**
      * @var ResourceModel $resource
@@ -33,17 +32,12 @@ class ModelRepository implements ModelRepositoryInterface
     protected $resource;
 
     /**
-     * @var ModelFactory $modelFactory
+     * @var BlogCollectionFactory $blogCollectionFactory
      */
-    protected $modelFactory;
+    protected $blogCollectionFactory;
 
     /**
-     * @var ModelCollectionFactory $modelCollectionFactory
-     */
-    protected $modelCollectionFactory;
-
-    /**
-     * @var ModelSearchResultsInterfaceFactory $searchResultsFactory
+     * @var SearchResultsInterfaceFactory $searchResultsFactory
      */
     protected $searchResultsFactory;
 
@@ -58,9 +52,9 @@ class ModelRepository implements ModelRepositoryInterface
     protected $dataObjectProcessor;
 
     /**
-     * @var ModelInterfaceFactory $datamodelFactory
+     * @var BlogInterfaceFactory $blogFactory
      */
-    protected $datamodelFactory;
+    protected $blogFactory;
 
     /**
      * @var StoreManagerInterface $storeManager
@@ -74,10 +68,9 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * @param ResourceModel $resource
-     * @param ModelFactory $modelFactory
-     * @param ModelInterfaceFactory $datamodelFactory
-     * @param ModelCollectionFactory $modelCollectionFactory
-     * @param ModelSearchResultsInterfaceFactory $searchResultsFactory
+     * @param BlogInterfaceFactory $blogFactory
+     * @param BlogCollectionFactory $blogCollectionFactory
+     * @param SearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      * @param StoreManagerInterface $storeManager
@@ -85,74 +78,77 @@ class ModelRepository implements ModelRepositoryInterface
      */
     public function __construct(
         ResourceModel $resource,
-        ModelFactory $modelFactory,
-        ModelInterfaceFactory $datamodelFactory,
-        ModelCollectionFactory $modelCollectionFactory,
-        ModelSearchResultsInterfaceFactory $searchResultsFactory,
+        BlogInterfaceFactory $blogFactory,
+        BlogCollectionFactory $blogCollectionFactory,
+        SearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager,
         CollectionProcessorInterface $collectionProcessor = null
     ) {
         $this->resource = $resource;
-        $this->modelFactory = $modelFactory;
-        $this->modelCollectionFactory = $modelCollectionFactory;
+        $this->blogCollectionFactory = $blogCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->dataObjectHelper = $dataObjectHelper;
-        $this->datamodelFactory = $datamodelFactory;
+        $this->blogFactory = $blogFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
-        $this->collectionProcessor = $collectionProcessor ?: $this->getCollectionProcessor();
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
      * Save Blog data
      *
-     * @param ModelInterface $model
-     * @return ModelInterface
+     * @param BlogInterface $blog
+     * @return BlogInterface
      * @throws CouldNotSaveException
      */
-    public function save(ModelInterface $model)
+    public function save(BlogInterface $blog)
     {
         try {
-            $this->resource->save($model);
+            $this->resource->save($blog);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__($exception->getMessage()));
         }
-        return $model;
+        return $blog;
     }
 
     /**
      * Load Model data by given Model Identity
      *
      * @param string $id
-     * @return Model
+     * @return BlogInterface
      * @throws NoSuchEntityException
      */
     public function getById($id)
     {
-        $model = $this->modelFactory->create();
-        $this->resource->load($model, $id);
-        if (!$model->getId()) {
+        $blog = $this->blogFactory->create();
+        $this->resource->load($blog, $id);
+        if (!$blog->getId()) {
             throw new NoSuchEntityException(__('The post with the "%1" ID doesn\'t exist.', $id));
         }
-        return $model;
+        return $blog;
     }
 
     /**
      * Load Blog data collection by given search criteria
      *
      * @param SearchCriteriaInterface $criteria
-     * @return ModelSearchResultsInterface
+     * @return SearchResultsInterface
+     * @throws InputException
      */
     public function getList(SearchCriteriaInterface $criteria)
     {
         /** @var Collection $collection */
-        $collection = $this->modelCollectionFactory->create();
+        $collection = $this->blogCollectionFactory->create();
 
-        $this->collectionProcessor->process($criteria, $collection);
+        try {
+            $this->collectionProcessor->process($criteria, $collection);
+        } catch (\Exception $e) {
+            throw new InputException(__($e->getMessage()));
+        }
 
-        /** @var ModelSearchResultsInterface $searchResults */
+        /** @var SearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
         $searchResults->setItems($collection->getItems());
@@ -163,14 +159,14 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Delete Blog
      *
-     * @param ModelInterface $model
+     * @param BlogInterface $blog
      * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(ModelInterface $model)
+    public function delete(BlogInterface $blog)
     {
         try {
-            $this->resource->delete($model);
+            $this->resource->delete($blog);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
@@ -180,28 +176,13 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Delete Blog by given Blog Identity
      *
-     * @param string $blockId
+     * @param string $blogId
      * @return bool
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($blockId)
+    public function deleteById($blogId)
     {
-        return $this->delete($this->getById($blockId));
-    }
-
-    /**
-     * Returns collection processor
-     *
-     * @return CollectionProcessorInterface
-     */
-    private function getCollectionProcessor()
-    {
-        if (!$this->collectionProcessor) {
-            $this->collectionProcessor = ObjectManager::getInstance()->get(
-                'Transoft\Blog\Model\Api\SearchCriteria\ModelCollectionProcessor'
-            );
-        }
-        return $this->collectionProcessor;
+        return $this->delete($this->getById($blogId));
     }
 }

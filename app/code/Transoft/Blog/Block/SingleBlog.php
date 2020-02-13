@@ -5,14 +5,15 @@ namespace Transoft\Blog\Block;
 
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Transoft\Blog\Model\ModelRepository;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Transoft\Blog\Api\Data\BlogInterface;
+use Transoft\Blog\Model\BlogRepository;
 
 /**
  * Generates blog list
  */
-class SingleBlog extends Template implements ArgumentInterface
+class SingleBlog extends Template
 {
     /**
      * @var RequestInterface $request
@@ -20,22 +21,27 @@ class SingleBlog extends Template implements ArgumentInterface
     private $request;
 
     /**
-     * @var ModelRepository
+     * @var BlogRepository
      */
-    private $modelRepository;
+    private $blogRepository;
 
     /**
      * Creates single blog block
      *
+     * @param Context $context
      * @param RequestInterface $request
-     * @param ModelRepository $modelRepository
+     * @param BlogRepository $blogRepository
+     * @param array $data
      */
     public function __construct(
+        Context $context,
         RequestInterface $request,
-        ModelRepository $modelRepository
+        BlogRepository $blogRepository,
+        array $data = []
     ) {
         $this->request = $request;
-        $this->modelRepository = $modelRepository;
+        $this->blogRepository = $blogRepository;
+        parent::__construct($context, $data);
     }
 
     /**
@@ -53,11 +59,11 @@ class SingleBlog extends Template implements ArgumentInterface
      *
      * @param int $id
      *
-     * @return mixed
+     * @return BlogInterface
      * @throws NoSuchEntityException
      */
     public function getBlogById($id)
     {
-        return $this->modelRepository->getById($id);
+        return $this->blogRepository->getById($id);
     }
 }

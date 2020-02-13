@@ -5,11 +5,7 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block name="blog.bloglist" before="product.info.main" template="Transoft_Blog::blog_post_list.phtml">
-                <arguments>
-                    <argument name="bloglist" xsi:type="object">Transoft\Blog\Block\Bloglist</argument>
-                </arguments>
-            </block>
+            <block class="Transoft\Blog\Block\Bloglist" name="blog.bloglist" before="product.info.main" template="Transoft_Blog::blog_post_list.phtml" />
         </referenceContainer>
     </body>
 </page>

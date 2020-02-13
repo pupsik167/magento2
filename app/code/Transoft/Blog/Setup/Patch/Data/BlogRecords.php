@@ -20,8 +20,6 @@ class BlogRecords implements DataPatchInterface
     private $adapterInterface;
 
     /**
-     * Constructor.
-     *
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param AdapterInterface $adapterInterface
      */

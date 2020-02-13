@@ -4,13 +4,16 @@ declare(strict_types=1);
 namespace Transoft\Blog\Model;
 
 use Magento\Framework\Model\AbstractModel;
-use Transoft\Blog\Api\Data\ModelInterface;
+use Transoft\Blog\Api\Data\BlogInterface;
 
-class Model extends AbstractModel implements ModelInterface
+/**
+ * Blog model class
+ */
+class Blog extends AbstractModel implements BlogInterface
 {
     protected function _construct()
     {
-        $this->_init(ResourceModel\Model::class);
+        $this->_init(ResourceModel\Blog::class);
     }
 
     /**
@@ -18,7 +21,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function getBlogId()
     {
-        return $this->_getData(ModelInterface::BLOG_ID);
+        return $this->_getData(BlogInterface::BLOG_ID);
     }
 
     /**
@@ -26,7 +29,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function setBlogId($id)
     {
-        $this->setData(ModelInterface::BLOG_ID, $id);
+        $this->setData(BlogInterface::BLOG_ID, $id);
     }
 
     /**
@@ -34,7 +37,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function getTheme()
     {
-        return $this->_getData(ModelInterface::THEME);
+        return $this->_getData(BlogInterface::THEME);
     }
 
     /**
@@ -42,7 +45,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function setTheme($theme)
     {
-        $this->setData(ModelInterface::THEME, $theme);
+        $this->setData(BlogInterface::THEME, $theme);
     }
 
     /**
@@ -50,7 +53,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function getContent()
     {
-        return $this->_getData(ModelInterface::CONTENT);
+        return $this->_getData(BlogInterface::CONTENT);
     }
 
     /**
@@ -58,7 +61,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function setContent($content)
     {
-        $this->setData(ModelInterface::CONTENT, $content);
+        $this->setData(BlogInterface::CONTENT, $content);
     }
 
     /**
@@ -66,7 +69,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function getImagePath()
     {
-        return $this->_getData(ModelInterface::IMAGE_PATH);
+        return $this->_getData(BlogInterface::IMAGE_PATH);
     }
 
     /**
@@ -74,7 +77,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function setImagePath($imagePath)
     {
-        $this->setData(ModelInterface::IMAGE_PATH, $imagePath);
+        $this->setData(BlogInterface::IMAGE_PATH, $imagePath);
     }
 
     /**
@@ -82,7 +85,7 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function getCreationTime()
     {
-        return $this->_getData(ModelInterface::CREATION_TIME);
+        return $this->_getData(BlogInterface::CREATION_TIME);
     }
 
     /**
@@ -90,6 +93,6 @@ class Model extends AbstractModel implements ModelInterface
      */
     public function setCreationTime($creationTime)
     {
-        $this->setData(ModelInterface::CREATION_TIME, $creationTime);
+        $this->setData(BlogInterface::CREATION_TIME, $creationTime);
     }
 }

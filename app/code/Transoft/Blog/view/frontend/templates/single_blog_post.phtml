@@ -3,9 +3,8 @@ use Transoft\Blog\Block\SingleBlog;
 ?>
 <?php /** @var SingleBlog $block*/ ?>
 <?php
-$bloglist = $block->getData('single_blog');
-$id = $bloglist->getBlogId();
-$blog = $bloglist->getBlogById($id);
+$id = $block->getBlogId();
+$blog = $block->getBlogById($id);
 ?>
 
 <div>
@@ -15,7 +14,7 @@ $blog = $bloglist->getBlogById($id);
         <p><?= $block->escapeHtml($blog->getContent()) ?></p>
         <span><strong>Image:</strong></span>
         <img src="<?= $block->escapeUrl($blog->getImagePath()) ?>"
-             alt="<?= $block->escapeHtmlAttr(__("Image")) ?>"
+             alt="<?= $block->escapeHtmlAttr(__($block->getTheme())) ?>"
              width="300"
              height="300"
         />

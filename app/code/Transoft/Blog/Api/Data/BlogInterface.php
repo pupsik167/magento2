@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Api\Data;
 
-interface ModelInterface
+interface BlogInterface
 {
     const BLOG_ID = 'blog_id';
     const THEME = 'theme';

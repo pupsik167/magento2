@@ -5,30 +5,10 @@ use Transoft\Blog\Block\Bloglist;
 <?php /** @var Bloglist $block*/
 ?>
 <?php
-const DATA_SEPARATOR = '_sep_';
-
-$bloglist = $block->getData('bloglist');
-$data = $bloglist->getLatestPostItems();
+$jsonData = $block->getConfig();
 ?>
 
-<?php if ($bloglist->isTypesMatching()): ?>
-    <div class="blog-list">
+<?php if ($block->isTypesMatching()): ?>
+    <div data-mage-init='{"blogList": <?= $block->escapeHtml($jsonData) ?> }' class="blog-list">
     </div>
-    <script type="text/x-magento-init">
-    {
-        ".blog-list": {
-            "blogListWidget": {
-            <?php foreach ($data as $value): ?>
-                <?php $id = $value->getBlogId();
-                $widgetBlogData = $block->escapeHtml($value->getTheme()) . DATA_SEPARATOR
-                . $block->escapeUrl($bloglist->getUrlById($id));
-                ?>
-                "blog<?= $id ?>": "<?= $widgetBlogData ?>",
-            <?php endforeach; ?>
-                "title": "<?= $block->escapeHtml(__('Latest 5 blogs:')) ?>",
-                "dataSeparator": "<?= DATA_SEPARATOR ?>"
-            }
-        }
-    }
-    </script>
 <?php endif; ?>

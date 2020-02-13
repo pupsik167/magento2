@@ -10,7 +10,7 @@ use Magento\Framework\Controller\ResultFactory;
 /**
  * Frontend index controller
  */
-class Index extends Action implements HttpGetActionInterface
+class View extends Action implements HttpGetActionInterface
 {
     /**
      * @inheritdoc

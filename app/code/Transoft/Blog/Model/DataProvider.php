@@ -6,8 +6,8 @@ namespace Transoft\Blog\Model;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Transoft\Blog\Model\ModelRepository;
-use Transoft\Blog\Model\ResourceModel\Model\CollectionFactory;
+use Transoft\Blog\Model\BlogRepository;
+use Transoft\Blog\Model\ResourceModel\Blog\CollectionFactory;
 
 /**
  * Blog model ui data provider
@@ -25,9 +25,9 @@ class DataProvider extends AbstractDataProvider
     private $file;
 
     /**
-     * @var ModelRepository
+     * @var BlogRepository
      */
-    private $modelRepository;
+    private $blogRepository;
 
     /**
      * @var SearchCriteriaBuilder $searchCriteriaBuilder
@@ -35,14 +35,12 @@ class DataProvider extends AbstractDataProvider
     private $searchCriteriaBuilder;
 
     /**
-     * Constructor.
-     *
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
      * @param File $file
-     * @param CollectionFactory $postCollectionFactory
-     * @param ModelRepository $modelRepository
+     * @param CollectionFactory $blogCollectionFactory
+     * @param BlogRepository $blogRepository
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param array $meta
      * @param array $data
@@ -52,15 +50,15 @@ class DataProvider extends AbstractDataProvider
         $primaryFieldName,
         $requestFieldName,
         File $file,
-        CollectionFactory $postCollectionFactory,
-        ModelRepository $modelRepository,
+        CollectionFactory $blogCollectionFactory,
+        BlogRepository $blogRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $postCollectionFactory->create();
+        $this->collection = $blogCollectionFactory->create();
         $this->file = $file;
-        $this->modelRepository = $modelRepository;
+        $this->blogRepository = $blogRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
@@ -74,14 +72,14 @@ class DataProvider extends AbstractDataProvider
             return $this->_loadedData;
         }
 
-        $items = $this->modelRepository->getList(($this->searchCriteriaBuilder->create()))->getItems();
+        $items = $this->blogRepository->getList(($this->searchCriteriaBuilder->create()))->getItems();
 
         foreach ($items as $post) {
             $postData = $post->getData();
-            $path_parts = $this->file->getPathInfo($postData['image_path']);
+            $pathParts = $this->file->getPathInfo($postData['image_path']);
             $postImg = [
                 ['type' => 'image',
-                 'name' => $path_parts['filename'],
+                 'name' => $pathParts['filename'],
                  'url' => $postData['image_path']
                 ]
             ];

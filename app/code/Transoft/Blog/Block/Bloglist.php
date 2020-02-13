@@ -8,16 +8,17 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\UrlInterface;
-use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Element\Template;
-use Transoft\Blog\Model\ModelRepository;
+use Magento\Framework\View\Element\Template\Context;
+use Transoft\Blog\Model\BlogRepository;
 
 /**
  * Generates blog list
  */
-class Bloglist extends Template implements ArgumentInterface
+class Bloglist extends Template
 {
     /**
      * @var RequestInterface $request
@@ -40,9 +41,9 @@ class Bloglist extends Template implements ArgumentInterface
     private $registryLocator;
 
     /**
-     * @var ModelRepository
+     * @var BlogRepository
      */
-    private $modelRepository;
+    private $blogRepository;
 
     /**
      * @var SortOrderBuilder $sortOrderBuilder
@@ -57,36 +58,42 @@ class Bloglist extends Template implements ArgumentInterface
     /**
      * Creates Bloglist block
      *
+     * @param Context $context
      * @param RequestInterface $request
      * @param UrlInterface $urlBuilder
      * @param RegistryLocator $registryLocator
      * @param ScopeConfigInterface $scopeInterface
-     * @param ModelRepository $modelRepository
+     * @param BlogRepository $blogRepository
      * @param SortOrderBuilder $sortOrderBuilder
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param array $data
      */
     public function __construct(
+        Context $context,
         RequestInterface $request,
         UrlInterface $urlBuilder,
         RegistryLocator $registryLocator,
         ScopeConfigInterface $scopeInterface,
-        ModelRepository $modelRepository,
+        BlogRepository $blogRepository,
         SortOrderBuilder $sortOrderBuilder,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        array $data = []
     ) {
         $this->request = $request;
         $this->urlBuilder = $urlBuilder;
         $this->registryLocator = $registryLocator;
         $this->scopeInterface = $scopeInterface;
-        $this->modelRepository = $modelRepository;
+        $this->blogRepository = $blogRepository;
         $this->sortOrderBuilder = $sortOrderBuilder;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        parent::__construct($context, $data);
     }
 
     /**
      * Returns model collection items
      *
-     * @return mixed
+     * @return array
+     * @throws InputException
      */
     public function getLatestPostItems()
     {
@@ -94,7 +101,7 @@ class Bloglist extends Template implements ArgumentInterface
         $this->sortOrderBuilder->setDescendingDirection();
         $this->searchCriteriaBuilder->addSortOrder($this->sortOrderBuilder->create());
         $this->searchCriteriaBuilder->setPageSize(5);
-        $searchResult = $this->modelRepository->getList(($this->searchCriteriaBuilder->create()));
+        $searchResult = $this->blogRepository->getList(($this->searchCriteriaBuilder->create()));
         return $searchResult->getItems();
     }
 
@@ -133,5 +140,28 @@ class Bloglist extends Template implements ArgumentInterface
     public function getUrlById(int $id) : string
     {
         return $this->urlBuilder->getUrl('blog/blog/index', ['id' => $id]);
+    }
+
+    /**
+     * Returns json config
+     *
+     * @return string
+     * @throws InputException
+     */
+    public function getConfig()
+    {
+        $data = $this->getLatestPostItems();
+        $jsonConfig = [];
+
+        foreach ($data as $item) {
+            array_push($jsonConfig, [
+                'theme' => $item->getTheme(),
+                'url' => $this->getUrlById((int)$item->getBlogId())
+            ]);
+        }
+
+        $jsonConfig['length'] = count($jsonConfig);
+
+        return json_encode($jsonConfig);
     }
 }

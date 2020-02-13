@@ -10,11 +10,7 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block name="blog.single_blog" template="Transoft_Blog::single_blog_post.phtml">
-                <arguments>
-                    <argument name="single_blog" xsi:type="object">Transoft\Blog\Block\SingleBlog</argument>
-                </arguments>
-            </block>
+            <block class="Transoft\Blog\Block\SingleBlog" name="blog.single_blog" template="Transoft_Blog::single_blog_post.phtml" />
         </referenceContainer>
     </body>
 </page>

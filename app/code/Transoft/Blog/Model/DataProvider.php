@@ -17,7 +17,7 @@ class DataProvider extends AbstractDataProvider
     /**
      * @var array
      */
-    protected $_loadedData;
+    private $_loadedData;
 
     /**
      * @var File $file
@@ -78,9 +78,10 @@ class DataProvider extends AbstractDataProvider
             $postData = $post->getData();
             $pathParts = $this->file->getPathInfo($postData['image_path']);
             $postImg = [
-                ['type' => 'image',
-                 'name' => $pathParts['filename'],
-                 'url' => $postData['image_path']
+                [
+                    'type' => 'image',
+                    'name' => $pathParts['filename'],
+                    'url' => $postData['image_path']
                 ]
             ];
             $postData['image_path'] = $postImg;

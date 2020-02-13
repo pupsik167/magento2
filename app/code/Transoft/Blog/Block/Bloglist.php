@@ -139,7 +139,7 @@ class Bloglist extends Template
      */
     public function getUrlById(int $id) : string
     {
-        return $this->urlBuilder->getUrl('blog/blog/index', ['id' => $id]);
+        return $this->urlBuilder->getUrl('blog/blog/view', ['id' => $id]);
     }
 
     /**

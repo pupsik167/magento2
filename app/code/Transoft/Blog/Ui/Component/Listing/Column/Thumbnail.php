@@ -15,21 +15,6 @@ class Thumbnail extends Column
     const ALT_FIELD = 'name';
 
     /**
-     * @param ContextInterface $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param array $components
-     * @param array $data
-     */
-    public function __construct(
-        ContextInterface $context,
-        UiComponentFactory $uiComponentFactory,
-        array $components = [],
-        array $data = []
-    ) {
-        parent::__construct($context, $uiComponentFactory, $components, $data);
-    }
-
-    /**
      * @inheritdoc
      */
     public function prepareDataSource(array $dataSource)

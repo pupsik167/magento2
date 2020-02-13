@@ -161,6 +161,7 @@ class Bloglist extends Template
         }
 
         $jsonConfig['length'] = count($jsonConfig);
+        $jsonConfig['title'] = __('Latest 5 blogs:');
 
         return json_encode($jsonConfig);
     }

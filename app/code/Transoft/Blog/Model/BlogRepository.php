@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Model;
 
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
@@ -12,7 +11,6 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 use Transoft\Blog\Api\BlogRepositoryInterface;
 use Transoft\Blog\Api\Data\BlogInterface;
@@ -42,16 +40,6 @@ class BlogRepository implements BlogRepositoryInterface
     protected $searchResultsFactory;
 
     /**
-     * @var DataObjectHelper $dataObjectHelper
-     */
-    protected $dataObjectHelper;
-
-    /**
-     * @var DataObjectProcessor $dataObjectProcessor
-     */
-    protected $dataObjectProcessor;
-
-    /**
      * @var BlogInterfaceFactory $blogFactory
      */
     protected $blogFactory;
@@ -71,8 +59,6 @@ class BlogRepository implements BlogRepositoryInterface
      * @param BlogInterfaceFactory $blogFactory
      * @param BlogCollectionFactory $blogCollectionFactory
      * @param SearchResultsInterfaceFactory $searchResultsFactory
-     * @param DataObjectHelper $dataObjectHelper
-     * @param DataObjectProcessor $dataObjectProcessor
      * @param StoreManagerInterface $storeManager
      * @param CollectionProcessorInterface $collectionProcessor
      */
@@ -81,17 +67,13 @@ class BlogRepository implements BlogRepositoryInterface
         BlogInterfaceFactory $blogFactory,
         BlogCollectionFactory $blogCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager,
-        CollectionProcessorInterface $collectionProcessor = null
+        CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->blogCollectionFactory = $blogCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
         $this->blogFactory = $blogFactory;
-        $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
     }

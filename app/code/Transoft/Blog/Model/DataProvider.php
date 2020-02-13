@@ -6,7 +6,6 @@ namespace Transoft\Blog\Model;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Transoft\Blog\Model\BlogRepository;
 use Transoft\Blog\Model\ResourceModel\Blog\CollectionFactory;
 
 /**

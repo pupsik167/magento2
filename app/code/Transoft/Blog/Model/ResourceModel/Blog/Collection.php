@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Transoft\Blog\Model\ResourceModel\Blog;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
-use Magento\Store\Model\Store;
 
 /**
  * Blog collection class

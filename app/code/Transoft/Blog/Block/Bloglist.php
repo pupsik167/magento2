@@ -10,7 +10,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NotFoundException;
-use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Transoft\Blog\Model\BlogRepository;
@@ -21,19 +20,9 @@ use Transoft\Blog\Model\BlogRepository;
 class Bloglist extends Template
 {
     /**
-     * @var RequestInterface $request
-     */
-    private $request;
-
-    /**
      * ScopeConfigInterface $scopeInterface
      */
     private $scopeInterface;
-
-    /**
-     * UrlInterface $urlInterface
-     */
-    private $urlBuilder;
 
     /**
      * @var RegistryLocator $registryLocator
@@ -59,8 +48,6 @@ class Bloglist extends Template
      * Creates Bloglist block
      *
      * @param Context $context
-     * @param RequestInterface $request
-     * @param UrlInterface $urlBuilder
      * @param RegistryLocator $registryLocator
      * @param ScopeConfigInterface $scopeInterface
      * @param BlogRepository $blogRepository
@@ -70,8 +57,6 @@ class Bloglist extends Template
      */
     public function __construct(
         Context $context,
-        RequestInterface $request,
-        UrlInterface $urlBuilder,
         RegistryLocator $registryLocator,
         ScopeConfigInterface $scopeInterface,
         BlogRepository $blogRepository,
@@ -79,8 +64,6 @@ class Bloglist extends Template
         SearchCriteriaBuilder $searchCriteriaBuilder,
         array $data = []
     ) {
-        $this->request = $request;
-        $this->urlBuilder = $urlBuilder;
         $this->registryLocator = $registryLocator;
         $this->scopeInterface = $scopeInterface;
         $this->blogRepository = $blogRepository;
@@ -127,7 +110,7 @@ class Bloglist extends Template
      */
     public function getBlogId()
     {
-        return $this->request->getParam('id');
+        return $this->getRequest()->getParam('id');
     }
 
     /**
@@ -139,7 +122,7 @@ class Bloglist extends Template
      */
     public function getUrlById(int $id) : string
     {
-        return $this->urlBuilder->getUrl('blog/blog/view', ['id' => $id]);
+        return $this->getUrl('blog/blog/view', ['id' => $id]);
     }
 
     /**

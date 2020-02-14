@@ -47,7 +47,6 @@ class Delete extends Action implements HttpPostActionInterface
 
     /**
      * @inheritDoc
-     *
      */
     public function execute()
     {

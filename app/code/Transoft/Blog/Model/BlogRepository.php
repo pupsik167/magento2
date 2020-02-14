@@ -9,7 +9,7 @@ use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Transoft\Blog\Api\BlogRepositoryInterface;
@@ -117,7 +117,7 @@ class BlogRepository implements BlogRepositoryInterface
      *
      * @param SearchCriteriaInterface $criteria
      * @return SearchResultsInterface
-     * @throws InputException
+     * @throws LocalizedException
      */
     public function getList(SearchCriteriaInterface $criteria)
     {
@@ -127,7 +127,7 @@ class BlogRepository implements BlogRepositoryInterface
         try {
             $this->collectionProcessor->process($criteria, $collection);
         } catch (\Exception $e) {
-            throw new InputException(__($e->getMessage()));
+            throw new LocalizedException(__($e->getMessage()));
         }
 
         /** @var SearchResultsInterface $searchResults */

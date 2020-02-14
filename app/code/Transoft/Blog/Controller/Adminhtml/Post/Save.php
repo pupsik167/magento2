@@ -91,6 +91,8 @@ class Save extends Action implements HttpPostActionInterface
                 }
             }
 
+            $post->setData($data);
+
             try {
                 $this->blogRepository->save($post);
                 $this->messageManager->addSuccessMessage(__('You saved the post.'));
@@ -119,7 +121,7 @@ class Save extends Action implements HttpPostActionInterface
         $redirect = $data['back'] ?? 'close';
 
         if ($redirect === 'continue') {
-            $resultRedirect->setPath('*/*/edit', ['blog_id' => $blog->getId()]);
+            $resultRedirect->setPath('*/*/', ['blog_id' => $blog->getId()]);
         } elseif ($redirect === 'close') {
             $resultRedirect->setPath('*/*/');
         } elseif ($redirect === 'duplicate') {
@@ -128,7 +130,7 @@ class Save extends Action implements HttpPostActionInterface
             $id = $duplicateBlog->getBlogId();
             $this->messageManager->addSuccessMessage(__('You duplicated post.'));
             $this->dataPersistor->set('transoft_blog', $data);
-            $resultRedirect->setPath('*/*/edit', ['blog_id' => $id]);
+            $resultRedirect->setPath('*/*/', ['blog_id' => $id]);
         }
         return $resultRedirect;
     }

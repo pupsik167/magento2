@@ -7,7 +7,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
-use Magento\Framework\Exception\NotFoundException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
 use Transoft\Blog\Model\BlogRepository;
 
@@ -48,7 +48,6 @@ class Delete extends Action implements HttpPostActionInterface
     /**
      * @inheritDoc
      *
-     * @throws NotFoundException
      */
     public function execute()
     {
@@ -56,8 +55,8 @@ class Delete extends Action implements HttpPostActionInterface
 
         try {
             $post = $this->blogRepository->getById($id);
-        } catch (\Exception $e) {
-            throw new NotFoundException(__($e->getMessage()));
+        } catch (NoSuchEntityException $e) {
+            $this->messageManager->addError(__('There is no post with this id.'));
         }
 
         if (!$post->getId()) {

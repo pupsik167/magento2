@@ -7,8 +7,7 @@ use Magento\Catalog\Model\Locator\RegistryLocator;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
@@ -76,7 +75,7 @@ class Bloglist extends Template
      * Returns model collection items
      *
      * @return array
-     * @throws InputException
+     * @throws LocalizedException
      */
     public function getLatestPostItems()
     {
@@ -129,7 +128,7 @@ class Bloglist extends Template
      * Returns json config
      *
      * @return string
-     * @throws InputException
+     * @throws LocalizedException
      */
     public function getConfig()
     {

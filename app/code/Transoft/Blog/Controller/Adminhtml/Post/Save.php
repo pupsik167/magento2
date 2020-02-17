@@ -14,7 +14,6 @@ use Magento\Framework\View\Result\PageFactory;
 use Transoft\Blog\Api\BlogRepositoryInterface;
 use Transoft\Blog\Model\Blog;
 use Transoft\Blog\Model\BlogFactory;
-use Transoft\Blog\Model\BlogRepository;
 
 /**
  * Save post controller
@@ -38,7 +37,7 @@ class Save extends Action implements HttpPostActionInterface
     private $dataPersistor;
 
     /**
-     * @var BlogRepository
+     * @var BlogRepositoryInterface
      */
     private $blogRepository;
 

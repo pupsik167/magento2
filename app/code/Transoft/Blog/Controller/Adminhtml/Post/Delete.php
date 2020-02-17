@@ -9,7 +9,7 @@ use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterf
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
-use Transoft\Blog\Model\BlogRepository;
+use Transoft\Blog\Api\BlogRepositoryInterface;
 
 /**
  * Delete post controller
@@ -19,26 +19,26 @@ class Delete extends Action implements HttpPostActionInterface
     const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
 
     /**
-     * Index resultPageFactory
      * @var PageFactory
      */
     private $resultPageFactory;
 
     /**
-     * @var BlogRepository $blogRepository
+     * @var BlogRepositoryInterface $blogRepository
      */
     private $blogRepository;
 
     /**
-     * Index constructor.
+     * @inheritDoc
+     *
      * @param Context $context
      * @param PageFactory $resultPageFactory
-     * @param BlogRepository $blogRepository
+     * @param BlogRepositoryInterface $blogRepository
      */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        BlogRepository $blogRepository
+        BlogRepositoryInterface $blogRepository
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->blogRepository = $blogRepository;
@@ -58,7 +58,7 @@ class Delete extends Action implements HttpPostActionInterface
             $this->messageManager->addError(__('There is no post with this id.'));
         }
 
-        if (!$post->getId()) {
+        if (!$post->getBlogId()) {
             $this->messageManager->addError(__('Blog post no longer exists.'));
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('*/*/', ['_current' => true]);

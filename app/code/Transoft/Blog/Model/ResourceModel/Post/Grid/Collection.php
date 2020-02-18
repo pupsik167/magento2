@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Model\ResourceModel\Post\Grid;
 
-use Magento\Framework\Api\ExtensibleDataInterface;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;

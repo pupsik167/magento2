@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Transoft\Blog\Model;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem\Io\File;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Transoft\Blog\Model\ResourceModel\Blog\CollectionFactory;
@@ -64,6 +65,8 @@ class DataProvider extends AbstractDataProvider
 
     /**
      * @inheritdoc
+     *
+     * @throws LocalizedException
      */
     public function getData()
     {

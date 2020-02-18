@@ -11,6 +11,9 @@ use Transoft\Blog\Api\Data\BlogInterface;
  */
 class Blog extends AbstractModel implements BlogInterface
 {
+    /**
+     * Define blog resource model
+     */
     protected function _construct()
     {
         $this->_init(ResourceModel\Blog::class);
@@ -19,23 +22,23 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function getBlogId()
+    public function getBlogId() : int
     {
-        return $this->_getData(BlogInterface::BLOG_ID);
+        return (int)$this->_getData(BlogInterface::BLOG_ID);
     }
 
     /**
      * @inheritdoc
      */
-    public function setBlogId($id)
+    public function setBlogId($id) : BlogInterface
     {
-        $this->setData(BlogInterface::BLOG_ID, $id);
+        return $this->setData(BlogInterface::BLOG_ID, $id);
     }
 
     /**
      * @inheritdoc
      */
-    public function getTheme()
+    public function getTheme() : string
     {
         return $this->_getData(BlogInterface::THEME);
     }
@@ -43,15 +46,15 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function setTheme($theme)
+    public function setTheme($theme) : BlogInterface
     {
-        $this->setData(BlogInterface::THEME, $theme);
+        return $this->setData(BlogInterface::THEME, $theme);
     }
 
     /**
      * @inheritdoc
      */
-    public function getContent()
+    public function getContent() : string
     {
         return $this->_getData(BlogInterface::CONTENT);
     }
@@ -59,15 +62,15 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function setContent($content)
+    public function setContent($content) : BlogInterface
     {
-        $this->setData(BlogInterface::CONTENT, $content);
+        return $this->setData(BlogInterface::CONTENT, $content);
     }
 
     /**
      * @inheritdoc
      */
-    public function getImagePath()
+    public function getImagePath() : string
     {
         return $this->_getData(BlogInterface::IMAGE_PATH);
     }
@@ -75,15 +78,15 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function setImagePath($imagePath)
+    public function setImagePath($imagePath) : BlogInterface
     {
-        $this->setData(BlogInterface::IMAGE_PATH, $imagePath);
+        return $this->setData(BlogInterface::IMAGE_PATH, $imagePath);
     }
 
     /**
      * @inheritdoc
      */
-    public function getCreationTime()
+    public function getCreationTime() : string
     {
         return $this->_getData(BlogInterface::CREATION_TIME);
     }
@@ -91,8 +94,8 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function setCreationTime($creationTime)
+    public function setCreationTime($creationTime) : BlogInterface
     {
-        $this->setData(BlogInterface::CREATION_TIME, $creationTime);
+        return $this->setData(BlogInterface::CREATION_TIME, $creationTime);
     }
 }

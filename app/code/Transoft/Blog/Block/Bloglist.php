@@ -77,7 +77,7 @@ class Bloglist extends Template
      * @return array
      * @throws LocalizedException
      */
-    public function getLatestPostItems()
+    public function getLatestPostItems() : array
     {
         $this->sortOrderBuilder->setField('creation_time');
         $this->sortOrderBuilder->setDescendingDirection();
@@ -94,7 +94,7 @@ class Bloglist extends Template
      *
      * @throws NotFoundException
      */
-    public function isTypesMatching()
+    public function isTypesMatching() : bool
     {
         $configTypes = $this->scopeInterface->getValue('catalog/blog/blog_applied_to');
         $productType = $this->registryLocator->getProduct()->getTypeId();
@@ -107,7 +107,7 @@ class Bloglist extends Template
      *
      * @return int
      */
-    public function getBlogId()
+    public function getBlogId() : int
     {
         return $this->getRequest()->getParam('id');
     }
@@ -130,7 +130,7 @@ class Bloglist extends Template
      * @return string
      * @throws LocalizedException
      */
-    public function getConfig()
+    public function getConfig() : string
     {
         $data = $this->getLatestPostItems();
         $jsonConfig = [];

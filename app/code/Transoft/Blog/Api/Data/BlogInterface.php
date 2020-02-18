@@ -16,7 +16,7 @@ interface BlogInterface
      *
      * @return int
      */
-    public function getBlogId();
+    public function getBlogId() : int;
 
     /**
      * Set Blog ID
@@ -24,14 +24,14 @@ interface BlogInterface
      * @param int $id
      * @return $this
      */
-    public function setBlogId($id);
+    public function setBlogId($id) : BlogInterface;
 
     /**
      * Return the Theme
      *
      * @return string
      */
-    public function getTheme();
+    public function getTheme() : string;
 
     /**
      * Set the Theme
@@ -39,14 +39,14 @@ interface BlogInterface
      * @param string $theme
      * @return $this
      */
-    public function setTheme($theme);
+    public function setTheme($theme) : BlogInterface;
 
     /**
      * Return the Content
      *
      * @return string
      */
-    public function getContent();
+    public function getContent() : string;
 
     /**
      * Set the Content
@@ -54,14 +54,14 @@ interface BlogInterface
      * @param string $content
      * @return $this
      */
-    public function setContent($content);
+    public function setContent($content) : BlogInterface;
 
     /**
      * Return the image path
      *
      * @return string
      */
-    public function getImagePath();
+    public function getImagePath() : string;
 
     /**
      * Set the image path
@@ -69,14 +69,14 @@ interface BlogInterface
      * @param string $imagePath
      * @return $this
      */
-    public function setImagePath($imagePath);
+    public function setImagePath($imagePath) : BlogInterface;
 
     /**
      * Return the Date and Time of blog created
      *
      * @return string
      */
-    public function getCreationTime();
+    public function getCreationTime() : string;
 
     /**
      * Set the Date and Time of blog created
@@ -84,5 +84,5 @@ interface BlogInterface
      * @param string $creationTime
      * @return $this
      */
-    public function setCreationTime($creationTime);
+    public function setCreationTime($creationTime) : BlogInterface;
 }

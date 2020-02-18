@@ -15,40 +15,49 @@ use Transoft\Blog\Api\Data\BlogInterface;
 interface BlogRepositoryInterface
 {
     /**
+     * Saves blog to repository
+     *
      * @param BlogInterface $blog
      * @return BlogInterface
      * @throws CouldNotSaveException
      */
-    public function save(BlogInterface $blog);
+    public function save(BlogInterface $blog) : BlogInterface;
 
     /**
+     * Deletes blog from repository
+     *
      * @param BlogInterface $blog
      * @return BlogInterface
      * @throws CouldNotDeleteException
      */
-    public function delete(BlogInterface $blog);
+    public function delete(BlogInterface $blog) : BlogInterface;
 
     /**
+     * Deletes blog from repository by id
+     *
      * @param int $id
-     * @return void
+     * @return BlogInterface
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($id);
+    public function deleteById($id) : BlogInterface;
 
     /**
+     * Returns blog by id
+     *
      * @param int $id
      * @return BlogInterface
      * @throws NoSuchEntityException
      */
-    public function getById($id);
+    public function getById($id) : BlogInterface;
 
     /**
-     * @api
+     * Returns blog list
+     *
      * @param SearchCriteriaInterface $criteria
      * @return SearchResultsInterface
      * @throws LocalizedException
      * @throws InputException
      */
-    public function getList(SearchCriteriaInterface $criteria);
+    public function getList(SearchCriteriaInterface $criteria) : SearchResultsInterface;
 }

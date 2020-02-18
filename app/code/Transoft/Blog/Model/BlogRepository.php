@@ -11,16 +11,16 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Store\Model\StoreManagerInterface;
 use Transoft\Blog\Api\BlogRepositoryInterface;
 use Transoft\Blog\Api\Data\BlogInterface;
 use Transoft\Blog\Api\Data\BlogInterfaceFactory;
 use Transoft\Blog\Model\ResourceModel\Blog as ResourceModel;
-use Transoft\Blog\Model\ResourceModel\Blog\Collection;
 use Transoft\Blog\Model\ResourceModel\Blog\CollectionFactory as BlogCollectionFactory;
 
 /**
- * Blog repository class
+ * Model blog repository
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class BlogRepository implements BlogRepositoryInterface
 {
@@ -45,11 +45,6 @@ class BlogRepository implements BlogRepositoryInterface
     protected $blogFactory;
 
     /**
-     * @var StoreManagerInterface $storeManager
-     */
-    private $storeManager;
-
-    /**
      * @var CollectionProcessorInterface $collectionProcessor
      */
     private $collectionProcessor;
@@ -59,7 +54,6 @@ class BlogRepository implements BlogRepositoryInterface
      * @param BlogInterfaceFactory $blogFactory
      * @param BlogCollectionFactory $blogCollectionFactory
      * @param SearchResultsInterfaceFactory $searchResultsFactory
-     * @param StoreManagerInterface $storeManager
      * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
@@ -67,14 +61,12 @@ class BlogRepository implements BlogRepositoryInterface
         BlogInterfaceFactory $blogFactory,
         BlogCollectionFactory $blogCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
-        StoreManagerInterface $storeManager,
         CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->blogCollectionFactory = $blogCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->blogFactory = $blogFactory;
-        $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
     }
 
@@ -85,7 +77,7 @@ class BlogRepository implements BlogRepositoryInterface
      * @return BlogInterface
      * @throws CouldNotSaveException
      */
-    public function save(BlogInterface $blog)
+    public function save(BlogInterface $blog) : BlogInterface
     {
         try {
             $this->resource->save($blog);
@@ -102,7 +94,7 @@ class BlogRepository implements BlogRepositoryInterface
      * @return BlogInterface
      * @throws NoSuchEntityException
      */
-    public function getById($id)
+    public function getById($id) : BlogInterface
     {
         $blog = $this->blogFactory->create();
         $this->resource->load($blog, $id);
@@ -119,9 +111,8 @@ class BlogRepository implements BlogRepositoryInterface
      * @return SearchResultsInterface
      * @throws LocalizedException
      */
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria) : SearchResultsInterface
     {
-        /** @var Collection $collection */
         $collection = $this->blogCollectionFactory->create();
 
         try {
@@ -130,7 +121,6 @@ class BlogRepository implements BlogRepositoryInterface
             throw new LocalizedException(__($e->getMessage()));
         }
 
-        /** @var SearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
         $searchResults->setItems($collection->getItems());
@@ -142,28 +132,28 @@ class BlogRepository implements BlogRepositoryInterface
      * Delete Blog
      *
      * @param BlogInterface $blog
-     * @return bool
+     * @return BlogInterface
      * @throws CouldNotDeleteException
      */
-    public function delete(BlogInterface $blog)
+    public function delete(BlogInterface $blog) : BlogInterface
     {
         try {
             $this->resource->delete($blog);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
-        return true;
+        return $blog;
     }
 
     /**
      * Delete Blog by given Blog Identity
      *
      * @param string $blogId
-     * @return bool
+     * @return BlogInterface
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($blogId)
+    public function deleteById($blogId) : BlogInterface
     {
         return $this->delete($this->getById($blogId));
     }

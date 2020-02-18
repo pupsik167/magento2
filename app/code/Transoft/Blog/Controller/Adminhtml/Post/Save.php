@@ -90,7 +90,7 @@ class Save extends Action implements HttpPostActionInterface
                 }
             }
 
-            $post->setData($data);
+            $post->addData($data);
 
             try {
                 $this->blogRepository->save($post);
@@ -123,14 +123,8 @@ class Save extends Action implements HttpPostActionInterface
             $resultRedirect->setPath('*/*/', ['blog_id' => $blog->getId()]);
         } elseif ($redirect === 'close') {
             $resultRedirect->setPath('*/*/');
-        } elseif ($redirect === 'duplicate') {
-            $duplicateBlog = $this->blogFactory->create(['data' => $data]);
-            $duplicateBlog->setBlogId(null);
-            $id = $duplicateBlog->getBlogId();
-            $this->messageManager->addSuccessMessage(__('You duplicated post.'));
-            $this->dataPersistor->set('transoft_blog', $data);
-            $resultRedirect->setPath('*/*/', ['blog_id' => $id]);
         }
+
         return $resultRedirect;
     }
 }

@@ -5,6 +5,7 @@ namespace Transoft\Blog\Model\ResourceModel\Post;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Transoft\Blog\Model\Post;
+use Transoft\Blog\Model\ResourceModel\Post as ResourceModelPost;
 
 /**
  * Post resource model collection class
@@ -22,6 +23,6 @@ class Collection extends AbstractCollection
      */
     protected function _construct()
     {
-        $this->_init(Post::class, \Transoft\Blog\Model\ResourceModel\Post::class);
+        $this->_init(Post::class, ResourceModelPost::class);
     }
 }

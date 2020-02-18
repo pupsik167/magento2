@@ -49,7 +49,7 @@ class SingleBlog extends Template
      *
      * @return int
      */
-    public function getBlogId()
+    public function getBlogId() : int
     {
         return $this->request->getParam('id');
     }
@@ -62,7 +62,7 @@ class SingleBlog extends Template
      * @return BlogInterface
      * @throws NoSuchEntityException
      */
-    public function getBlogById($id)
+    public function getBlogById($id) : BlogInterface
     {
         return $this->blogRepository->getById($id);
     }

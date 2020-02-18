@@ -15,7 +15,7 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
     /**
      * @inheritdoc
      */
-    public function getButtonData()
+    public function getButtonData() : array
     {
         return [
             'label' => __('Save'),
@@ -48,31 +48,9 @@ class SaveButton extends GenericButton implements ButtonProviderInterface
      *
      * @return array
      */
-    private function getOptions()
+    private function getOptions() : array
     {
         return [
-            [
-                'label' => __('Save & Duplicate'),
-                'id_hard' => 'save_and_duplicate',
-                'data_attribute' => [
-                    'mage-init' => [
-                        'buttonAdapter' => [
-                            'actions' => [
-                                [
-                                    'targetName' => 'transoft_blog_form.transoft_blog_form',
-                                    'actionName' => 'save',
-                                    'params' => [
-                                        true,
-                                        [
-                                            'back' => 'duplicate'
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ],
             [
                 'id_hard' => 'save_and_close',
                 'label' => __('Save & Close'),

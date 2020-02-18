@@ -77,7 +77,7 @@ class Bloglist extends Template
      * @return array
      * @throws LocalizedException
      */
-    public function getLatestPostItems() : array
+    private function getLatestPostItems() : array
     {
         $this->sortOrderBuilder->setField('creation_time');
         $this->sortOrderBuilder->setDescendingDirection();
@@ -107,7 +107,7 @@ class Bloglist extends Template
      *
      * @return int
      */
-    public function getBlogId() : int
+    private function getBlogId() : int
     {
         return $this->getRequest()->getParam('id');
     }
@@ -119,7 +119,7 @@ class Bloglist extends Template
      *
      * @return string
      */
-    public function getUrlById(int $id) : string
+    private function getUrlById(int $id) : string
     {
         return $this->getUrl('blog/blog/view', ['id' => $id]);
     }

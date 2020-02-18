@@ -27,22 +27,22 @@ class BlogRepository implements BlogRepositoryInterface
     /**
      * @var ResourceModel $resource
      */
-    protected $resource;
+    private $resource;
 
     /**
      * @var BlogCollectionFactory $blogCollectionFactory
      */
-    protected $blogCollectionFactory;
+    private $blogCollectionFactory;
 
     /**
      * @var SearchResultsInterfaceFactory $searchResultsFactory
      */
-    protected $searchResultsFactory;
+    private $searchResultsFactory;
 
     /**
      * @var BlogInterfaceFactory $blogFactory
      */
-    protected $blogFactory;
+    private $blogFactory;
 
     /**
      * @var CollectionProcessorInterface $collectionProcessor

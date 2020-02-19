@@ -27,20 +27,20 @@ interface BlogRepositoryInterface
      * Deletes blog from repository
      *
      * @param BlogInterface $blog
-     * @return BlogInterface
+     * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(BlogInterface $blog) : BlogInterface;
+    public function delete(BlogInterface $blog) : bool;
 
     /**
      * Deletes blog from repository by id
      *
      * @param int $id
-     * @return BlogInterface
+     * @return bool
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($id) : BlogInterface;
+    public function deleteById($id) : bool;
 
     /**
      * Returns blog by id

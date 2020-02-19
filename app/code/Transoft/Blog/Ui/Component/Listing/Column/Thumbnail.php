@@ -20,7 +20,7 @@ class Thumbnail extends Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-                $filename = $item['image_path'];
+                $filename = $item['image_path'] ?? '';
                 $item[$fieldName . '_src'] = $this->context->getUrl('', ['_direct' => '']) . $filename;
                 $item[$fieldName . '_alt'] = $this->getAlt($item) ?: $filename;
                 $item[$fieldName . '_orig_src'] = $this->context->getUrl('', ['_direct' => '']) . $filename;

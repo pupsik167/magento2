@@ -91,25 +91,17 @@ class Bloglist extends Template
      * Check if types are matching
      *
      * @return bool
-     *
-     * @throws NotFoundException
      */
     public function isTypesMatching() : bool
     {
         $configTypes = $this->scopeInterface->getValue('catalog/blog/blog_applied_to');
-        $productType = $this->registryLocator->getProduct()->getTypeId();
+        try {
+            $productType = $this->registryLocator->getProduct()->getTypeId();
+        } catch (NotFoundException $e) {
+            return false;
+        }
         $configTypesArray = explode(',', $configTypes);
         return in_array($productType, $configTypesArray);
-    }
-
-    /**
-     * Returns blog id from request
-     *
-     * @return int
-     */
-    private function getBlogId() : int
-    {
-        return $this->getRequest()->getParam('id');
     }
 
     /**

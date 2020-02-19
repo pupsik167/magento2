@@ -9,7 +9,7 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
 use Transoft\Blog\Api\BlogRepositoryInterface;
 use Transoft\Blog\Model\Blog;
@@ -84,7 +84,7 @@ class Save extends Action implements HttpPostActionInterface
             if ($id) {
                 try {
                     $post = $this->blogRepository->getById($id);
-                } catch (LocalizedException $e) {
+                } catch (NoSuchEntityException $e) {
                     $this->messageManager->addErrorMessage(__('This post no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
@@ -118,9 +118,10 @@ class Save extends Action implements HttpPostActionInterface
     private function processBlockReturn($blog, $data, $resultRedirect)
     {
         $redirect = $data['back'] ?? 'close';
+        $id = (int)$blog->getBlogId();
 
-        if ($redirect === 'continue') {
-            $resultRedirect->setPath('*/*/', ['blog_id' => $blog->getId()]);
+        if ($redirect === 'continue' && $id !== 0) {
+            $resultRedirect->setPath('*/*/', ['blog_id' => $id]);
         } elseif ($redirect === 'close') {
             $resultRedirect->setPath('*/*/');
         }

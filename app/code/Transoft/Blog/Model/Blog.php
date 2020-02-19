@@ -22,9 +22,9 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function getBlogId() : int
+    public function getBlogId() : string
     {
-        return (int)$this->_getData(BlogInterface::BLOG_ID);
+        return $this->_getData(BlogInterface::BLOG_ID);
     }
 
     /**

@@ -6,7 +6,7 @@ namespace Transoft\Blog\Setup\Patch\Data;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Transoft\Blog\Model\ResourceModel\Post as BlogResourceModel;
+use Transoft\Blog\Model\ResourceModel\Blog as BlogResourceModel;
 
 /**
  * Blog records patch class

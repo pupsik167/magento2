@@ -132,28 +132,28 @@ class BlogRepository implements BlogRepositoryInterface
      * Delete Blog
      *
      * @param BlogInterface $blog
-     * @return BlogInterface
+     * @return bool
      * @throws CouldNotDeleteException
      */
-    public function delete(BlogInterface $blog) : BlogInterface
+    public function delete(BlogInterface $blog) : bool
     {
         try {
             $this->resource->delete($blog);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
-        return $blog;
+        return true;
     }
 
     /**
      * Delete Blog by given Blog Identity
      *
      * @param string $blogId
-     * @return BlogInterface
+     * @return bool
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($blogId) : BlogInterface
+    public function deleteById($blogId) : bool
     {
         return $this->delete($this->getById($blogId));
     }

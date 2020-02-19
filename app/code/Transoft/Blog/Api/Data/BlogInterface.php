@@ -14,9 +14,9 @@ interface BlogInterface
     /**
      * Return the Blog ID
      *
-     * @return int
+     * @return string
      */
-    public function getBlogId() : int;
+    public function getBlogId() : string;
 
     /**
      * Set Blog ID

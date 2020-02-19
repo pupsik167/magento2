@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Transoft\Blog\Model\ResourceModel\Post\Grid;
+namespace Transoft\Blog\Model\ResourceModel\Blog\Grid;
 
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
@@ -13,12 +13,12 @@ use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
 use Psr\Log\LoggerInterface;
-use Transoft\Blog\Model\ResourceModel\Post\Collection as PostCollection;
+use Transoft\Blog\Model\ResourceModel\Blog\Collection as BlogCollection;
 
 /**
  * Post resource model grid collection class
  */
-class Collection extends PostCollection implements SearchResultInterface
+class Collection extends BlogCollection implements SearchResultInterface
 {
     /**
      * @var AggregationInterface

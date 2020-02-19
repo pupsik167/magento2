@@ -9,11 +9,11 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="transoft_blog_post_listing_data_source" xsi:type="string">Transoft\Blog\Model\ResourceModel\Post\Grid\Collection</item>
+                <item name="transoft_blog_post_listing_data_source" xsi:type="string">Transoft\Blog\Model\ResourceModel\Blog\Grid\Collection</item>
             </argument>
         </arguments>
     </type>
-    <type name="Transoft\Blog\Model\ResourceModel\Post\Grid\Collection">
+    <type name="Transoft\Blog\Model\ResourceModel\Blog\Grid\Collection">
         <arguments>
             <argument name="mainTable" xsi:type="string">transoft_blog</argument>
             <argument name="eventPrefix" xsi:type="string">transoft_blog_post_collection</argument>

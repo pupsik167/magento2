@@ -52,25 +52,29 @@ class Delete extends Action implements HttpPostActionInterface
     {
         $id = (int)$this->getRequest()->getParam('id');
 
-        try {
-            $post = $this->blogRepository->getById($id);
-        } catch (NoSuchEntityException $e) {
-            $this->messageManager->addError(__('There is no post with this id.'));
+        if (is_numeric($id)) {
+            try {
+                $post = $this->blogRepository->getById($id);
+            } catch (NoSuchEntityException $e) {
+                $this->messageManager->addError(__('There is no post with this id.'));
+            }
         }
 
-        if (!$post->getBlogId()) {
-            $this->messageManager->addError(__('Blog post no longer exists.'));
-            $resultRedirect = $this->resultRedirectFactory->create();
-            return $resultRedirect->setPath('*/*/', ['_current' => true]);
-        }
+        if ($post !== null) {
+            if (!$post->getBlogId()) {
+                $this->messageManager->addError(__('Blog post no longer exists.'));
+                $resultRedirect = $this->resultRedirectFactory->create();
+                return $resultRedirect->setPath('*/*/', ['_current' => true]);
+            }
 
-        try {
-            $this->blogRepository->delete($post);
-            $this->messageManager->addSuccess(__('Your post has been deleted!'));
-        } catch (CouldNotDeleteException $e) {
-            $this->messageManager->addError(__('Error while trying to delete post'));
-            $resultRedirect = $this->resultRedirectFactory->create();
-            return $resultRedirect->setPath('*/*/', ['_current' => true]);
+            try {
+                $this->blogRepository->delete($post);
+                $this->messageManager->addSuccess(__('Your post has been deleted!'));
+            } catch (CouldNotDeleteException $e) {
+                $this->messageManager->addError(__('Error while trying to delete post'));
+                $resultRedirect = $this->resultRedirectFactory->create();
+                return $resultRedirect->setPath('*/*/', ['_current' => true]);
+            }
         }
 
         $resultRedirect = $this->resultRedirectFactory->create();

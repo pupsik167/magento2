@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Transoft\Blog\Api\BlogRepositoryInterface"
+                type="Transoft\Blog\Model\BlogRepository" />
+    <preference for="Transoft\Blog\Api\Data\BlogInterface"
+                type="Transoft\Blog\Model\Blog" />
+    <preference for="Magento\Framework\Api\SearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="transoft_blog_post_listing_data_source" xsi:type="string">Transoft\Blog\Model\ResourceModel\Blog\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Transoft\Blog\Model\ResourceModel\Blog\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">transoft_blog</argument>
+            <argument name="eventPrefix" xsi:type="string">transoft_blog_post_collection</argument>
+            <argument name="eventObject" xsi:type="string">post_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Transoft\Blog\Model\ResourceModel\Blog</argument>
+        </arguments>
+    </type>
+    <virtualType name="BlogImageUploader" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">blog/tmp/image</argument>
+            <argument name="basePath" xsi:type="string">blog/image</argument>
+        </arguments>
+    </virtualType>
+    <type name="Transoft\Blog\Controller\Adminhtml\Index\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">BlogImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Transoft\Blog\Api\Data\BlogInterface" xsi:type="string">Transoft\Blog\Api\BlogRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Transoft\Blog\Model\Api\SearchCriteria\BlogCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Transoft\Blog\Model\BlogRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Transoft\Blog\Model\Api\SearchCriteria\BlogCollectionProcessor</argument>
+        </arguments>
+    </type>
+</config>

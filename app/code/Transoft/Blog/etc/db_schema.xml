@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="transoft_blog" resource="default" engine="innodb" comment="Transoft Blog">
+        <column xsi:type="int" name="blog_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+        <column xsi:type="varchar" name="theme" length="255" nullable="false" comment="Blog Id"/>
+        <column xsi:type="text" name="content" nullable="false" comment="Blog Content"/>
+        <column xsi:type="varchar" name="image_path" length="255" nullable="false" comment="Blog Image Path"/>
+        <column xsi:type="timestamp" name="creation_time" nullable="false" comment="Blog Creation Date"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="blog_id"/>
+        </constraint>
+    </table>
+</schema>

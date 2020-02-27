@@ -1,0 +1,22 @@
+<?php
+
+use Magento\Framework\Exception\LocalizedException;
+use Transoft\Blog\Block\Bloglist;
+
+?>
+<?php /** @var Bloglist $block*/
+?>
+<?php
+try {
+    $jsonData = $block->getConfig();
+} catch (LocalizedException $e) {
+    $block->_logger->warning($e);
+}
+?>
+
+<?php
+    if ($block->isTypesMatching()): ?>
+        <div data-mage-init='{"blogList": <?= $block->escapeHtml($jsonData) ?> }' class="blog-list">
+        </div>
+    <?php endif;
+?>

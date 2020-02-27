@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Transoft_Blog::post" title="Blog Posts"
+                          sortOrder="10" >
+                    <resource id="Transoft_Blog::blog_manage_items"
+                              title="Manage Items" sortOrder="0" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -13,7 +13,7 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Index extends Action implements HttpGetActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_items';
 
     /**
      * @var PageFactory

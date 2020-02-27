@@ -12,6 +12,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\TemporaryState\CouldNotSaveException;
 use Transoft\Blog\Api\Data\BlogInterface;
 
+/**
+ * Interface for blog repository
+ */
 interface BlogRepositoryInterface
 {
     /**

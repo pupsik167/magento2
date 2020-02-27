@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Transoft\Blog\Api\Data;
 
+/**
+ * Interface for blog entities
+ */
 interface BlogInterface
 {
     const BLOG_ID = 'blog_id';
@@ -14,9 +17,9 @@ interface BlogInterface
     /**
      * Return the Blog ID
      *
-     * @return string
+     * @return int|null
      */
-    public function getBlogId() : string;
+    public function getBlogId();
 
     /**
      * Set Blog ID

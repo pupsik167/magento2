@@ -11,6 +11,7 @@ use Transoft\Blog\Api\Data\BlogInterface;
  */
 class Blog extends AbstractDb
 {
+    const MAIN_TABLE = 'transoft_blog';
     protected $_idFieldName = 'blog_id';
 
     protected function _construct()

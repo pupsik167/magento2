@@ -3,6 +3,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Transoft_Blog::blog" title="Blog title" module="Transoft_Blog" sortOrder="51" resource="Transoft_Blog::post"/>
-        <add id="Transoft_Blog::post" title="Manage Posts" module="Transoft_Blog" sortOrder="10" action="blog/post" resource="Transoft_Blog::post" parent="Transoft_Blog::blog"/>
+        <add id="Transoft_Blog::blog_manage_items" title="Manage Posts" module="Transoft_Blog" sortOrder="10" action="blog/post" resource="Transoft_Blog::blog_manage_items" parent="Transoft_Blog::blog"/>
     </menu>
 </config>

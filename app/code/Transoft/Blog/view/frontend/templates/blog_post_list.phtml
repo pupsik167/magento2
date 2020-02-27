@@ -1,8 +1,8 @@
 <?php
 
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NotFoundException;
 use Transoft\Blog\Block\Bloglist;
+
 ?>
 <?php /** @var Bloglist $block*/
 ?>
@@ -14,11 +14,9 @@ try {
 }
 ?>
 
-<?php try {
+<?php
     if ($block->isTypesMatching()): ?>
         <div data-mage-init='{"blogList": <?= $block->escapeHtml($jsonData) ?> }' class="blog-list">
         </div>
     <?php endif;
-} catch (NotFoundException $e) {
-    $block->_logger->warning($e);
-} ?>
+?>

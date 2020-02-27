@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route method="GET" url="/V1/Blog">
+    <route method="GET" url="/V1/blog">
         <service class="Transoft\Blog\Api\BlogRepositoryInterface" method="getList"/>
         <resources>
-            <resource ref="Transoft_Blog::blog"/>
+            <resource ref="Transoft_Blog::manage_post_items"/>
         </resources>
     </route>
-    <route method="POST" url="/V1/Blog">
+    <route method="POST" url="/V1/blog">
         <service class="Transoft\Blog\Api\BlogRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="Transoft_Blog::blog"/>
+            <resource ref="Transoft_Blog::manage_post_items"/>
         </resources>
     </route>
-    <route method="PUT" url="/V1/Blog/:id">
+    <route method="PUT" url="/V1/blog/:id">
         <service class="Transoft\Blog\Api\BlogRepositoryInterface" method="save"/>
         <resources>
-            <resource ref="Transoft_Blog::blog"/>
+            <resource ref="Transoft_Blog::manage_post_items"/>
         </resources>
     </route>
-    <route method="DELETE" url="/V1/Blog/:blogId">
+    <route method="DELETE" url="/V1/blog/:blogId">
         <service class="Transoft\Blog\Api\BlogRepositoryInterface" method="deleteById"/>
         <resources>
-            <resource ref="Transoft_Blog::blog"/>
+            <resource ref="Transoft_Blog::manage_post_items"/>
         </resources>
     </route>
 </routes>

@@ -16,7 +16,7 @@ use Transoft\Blog\Api\BlogRepositoryInterface;
  */
 class Delete extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_items';
 
     /**
      * @var PageFactory

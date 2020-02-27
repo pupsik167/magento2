@@ -17,7 +17,7 @@ class DataProvider extends AbstractDataProvider
     /**
      * @var array
      */
-    private $_loadedData;
+    private $loadedData;
 
     /**
      * @var File $file
@@ -70,8 +70,8 @@ class DataProvider extends AbstractDataProvider
      */
     public function getData()
     {
-        if (isset($this->_loadedData)) {
-            return $this->_loadedData;
+        if (isset($this->loadedData)) {
+            return $this->loadedData;
         }
 
         $items = $this->blogRepository->getList(($this->searchCriteriaBuilder->create()))->getItems();
@@ -87,9 +87,9 @@ class DataProvider extends AbstractDataProvider
                 ]
             ];
             $postData['image_path'] = $postImg;
-            $this->_loadedData[$post->getId()] = $postData;
+            $this->loadedData[$post->getId()] = $postData;
         }
 
-        return $this->_loadedData;
+        return $this->loadedData;
     }
 }

@@ -22,9 +22,9 @@ class Blog extends AbstractModel implements BlogInterface
     /**
      * @inheritdoc
      */
-    public function getBlogId() : string
+    public function getBlogId()
     {
-        return $this->_getData(BlogInterface::BLOG_ID);
+        return $this->getData(BlogInterface::BLOG_ID);
     }
 
     /**
@@ -40,7 +40,7 @@ class Blog extends AbstractModel implements BlogInterface
      */
     public function getTheme() : string
     {
-        return $this->_getData(BlogInterface::THEME);
+        return $this->getData(BlogInterface::THEME);
     }
 
     /**
@@ -56,7 +56,7 @@ class Blog extends AbstractModel implements BlogInterface
      */
     public function getContent() : string
     {
-        return $this->_getData(BlogInterface::CONTENT);
+        return $this->getData(BlogInterface::CONTENT);
     }
 
     /**
@@ -72,7 +72,7 @@ class Blog extends AbstractModel implements BlogInterface
      */
     public function getImagePath() : string
     {
-        return $this->_getData(BlogInterface::IMAGE_PATH);
+        return $this->getData(BlogInterface::IMAGE_PATH);
     }
 
     /**
@@ -88,7 +88,7 @@ class Blog extends AbstractModel implements BlogInterface
      */
     public function getCreationTime() : string
     {
-        return $this->_getData(BlogInterface::CREATION_TIME);
+        return $this->getData(BlogInterface::CREATION_TIME);
     }
 
     /**

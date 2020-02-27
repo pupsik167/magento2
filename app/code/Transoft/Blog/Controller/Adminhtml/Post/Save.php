@@ -12,6 +12,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
 use Transoft\Blog\Api\BlogRepositoryInterface;
+use Transoft\Blog\Api\Data\BlogInterface;
 use Transoft\Blog\Model\Blog;
 use Transoft\Blog\Model\BlogFactory;
 
@@ -20,7 +21,7 @@ use Transoft\Blog\Model\BlogFactory;
  */
 class Save extends Action implements HttpPostActionInterface
 {
-    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_posts';
+    const ADMIN_RESOURCE = 'Transoft_Blog::blog_manage_items';
 
     /**
      * @var PageFactory $resultPageFactory
@@ -31,6 +32,7 @@ class Save extends Action implements HttpPostActionInterface
      * @var BlogFactory
      */
     private $blogFactory;
+
     /**
      * @var DataPersistorInterface
      */
@@ -71,8 +73,8 @@ class Save extends Action implements HttpPostActionInterface
         $data = $this->getRequest()->getPostValue();
 
         if ($data) {
-            if (empty($data['blog_id'])) {
-                $data['blog_id'] = null;
+            if (empty($data[BlogInterface::BLOG_ID])) {
+                $data[BlogInterface::BLOG_ID] = null;
             }
 
             $post = $this->blogFactory->create(['data' => $data]);
@@ -88,9 +90,10 @@ class Save extends Action implements HttpPostActionInterface
                     $this->messageManager->addErrorMessage(__('This post no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
                 }
+                $post->addData($data);
+            } else {
+                $post = $this->blogFactory->create(['data' => $data]);
             }
-
-            $post->addData($data);
 
             try {
                 $this->blogRepository->save($post);
@@ -118,10 +121,10 @@ class Save extends Action implements HttpPostActionInterface
     private function processBlockReturn($blog, $data, $resultRedirect)
     {
         $redirect = $data['back'] ?? 'close';
-        $id = (int)$blog->getBlogId();
+        $id = $blog->getBlogId();
 
         if ($redirect === 'continue' && $id !== 0) {
-            $resultRedirect->setPath('*/*/', ['blog_id' => $id]);
+            $resultRedirect->setPath('*/*/', [BlogInterface::BLOG_ID => $id]);
         } elseif ($redirect === 'close') {
             $resultRedirect->setPath('*/*/');
         }

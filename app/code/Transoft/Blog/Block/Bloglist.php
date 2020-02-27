@@ -11,6 +11,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Transoft\Blog\Api\Data\BlogInterface;
 use Transoft\Blog\Model\BlogRepository;
 
 /**
@@ -79,7 +80,7 @@ class Bloglist extends Template
      */
     private function getLatestPostItems() : array
     {
-        $this->sortOrderBuilder->setField('creation_time');
+        $this->sortOrderBuilder->setField(BlogInterface::CREATION_TIME);
         $this->sortOrderBuilder->setDescendingDirection();
         $this->searchCriteriaBuilder->addSortOrder($this->sortOrderBuilder->create());
         $this->searchCriteriaBuilder->setPageSize(5);

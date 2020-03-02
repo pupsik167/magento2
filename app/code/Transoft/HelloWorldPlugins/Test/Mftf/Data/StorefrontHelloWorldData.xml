@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="StorefrontHelloWorldData">
+        <data key="title">&lt;p&gt;Prefix_ &lt;/p&gt;&lt;h1&gt;Hello World!&lt;/h1&gt; "_suffix"&lt;p&gt;&lt;/p&gt;</data>
+    </entity>
+</entities>

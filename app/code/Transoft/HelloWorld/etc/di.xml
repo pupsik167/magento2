@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Transoft\HelloWorldAPI\Api\HelloWorldRepositoryInterface"
+                type="Transoft\HelloWorld\Model\HelloWorldRepository" />
+    <preference for="Transoft\HelloWorldAPI\Api\Data\HelloWorldInterface"
+                type="Transoft\HelloWorld\Model\HelloWorld" />
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Transoft\HelloWorldAPI\Api\Data\HelloWorldInterface" xsi:type="string">Transoft\HelloWorldAPI\Api\HelloWorldRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

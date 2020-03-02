@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataOperation.xsd">
+    <operation name="HelloWorld"
+               dataType="hello" type="get"
+               auth="anonymous" url="/V1/HelloWorld" method="GET">
+        <contentType>application/xml</contentType>
+    </operation>
+</operations>

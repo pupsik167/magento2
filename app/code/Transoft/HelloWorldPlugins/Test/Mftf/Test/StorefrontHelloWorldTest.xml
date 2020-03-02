@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="StorefrontHelloWorldTest">
+        <annotations>
+            <features value="Storefront Hello World"/>
+            <stories value="Storefront Hello World"/>
+            <title value="Storefront Hello World"/>
+            <description value="Storefront Hello World"/>
+            <severity value="MINOR"/>
+            <group value="HelloWorld"/>
+            <testCaseId value="Transoft-00001"/>
+        </annotations>
+        <actionGroup ref="StorefrontHelloWorldActionGroup" stepKey="StorefrontHelloWorld"/>
+    </test>
+</tests>
